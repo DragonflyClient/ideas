@@ -4,18 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    />
   </head>
   <body>
-    <form id="myForm">
-        <label for="title">Title</label>
-        <input id="title" name="title" type="text">
-        
-        <label for="description">Description</label>
-        <textarea name="description" id="description" cols="15" rows="10"></textarea><br>
-        <button type="submit">Submit</button>
-    </form>
-
+    <div class="container">
+      <form id="suggestion-form">
+        <div class="row">
+          <div class="six columns">
+            <label for="subject">Subject</label>
+            <input
+              class="u-full-width"
+              type="text"
+              placeholder="Dragonfly cosmetics"
+              id="subject"
+              name="subject"
+            />
+          </div>
+          <div class="six columns">
+            <label for="area">Area of ​​question</label>
+            <select class="u-full-width" id="area">
+              <option value="client">Client</option>
+              <option value="website">Website</option>
+            </select>
+          </div>
+        </div>
+        <label for="message">Message</label>
+        <textarea
+          class="u-full-width"
+          placeholder="I would like …"
+          id="message"
+          name="message"
+        ></textarea>
+        <label class="example-send-yourself-copy">
+          <input type="checkbox" />
+          <span class="label-body">Send a copy to yourself</span>
+        </label>
+        <input class="button-primary" type="submit" value="Submit" />
+      </form>
+    </div>
     <script src="client.js"></script>
   </body>
 </html>

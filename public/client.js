@@ -1,20 +1,24 @@
-const form = document.querySelector('#myForm')
+const form = document.querySelector('#suggestion-form')
+const areaSelection = document.getElementById('area')
 
 // submit suggestion
 form.addEventListener('submit', event => {
     event.preventDefault()
 
     const formData = new FormData(form)
-    const title = formData.get('title')
-    const description = formData.get('description')
-    const message = {
+    const title = formData.get('subject')
+    const message = formData.get('message')
+    const area = areaSelection.options[areaSelection.selectedIndex].value;
+
+    const suggestion = {
         title,
-        description
+        message,
+        area
     }
 
     fetch('http://localhost:3000/', {
         method: 'POST',
-        body: JSON.stringify(message),
+        body: JSON.stringify(suggestion),
         headers: {
             'content-type': 'application/json'
         }
