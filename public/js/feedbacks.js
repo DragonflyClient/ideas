@@ -2,7 +2,7 @@ const feedbackCont = document.querySelector('.feedbacks')
 const loadMoreBtn = document.getElementById('load')
 const orderSelection = document.getElementById('order')
 const languageSelection = document.getElementById('lang')
-const loadAmount = 2
+const loadAmount = 10
 
 let order = -1
 let skip = 0
@@ -55,7 +55,10 @@ function reloadAll() {
         .then(response => response.json())
         .then(feedbacks => {
             feedbackCont.innerText = ''
-            feedbacks.forEach(feedback => createContent(feedback));
+            feedbacks.forEach(feedback => {
+                createContent(feedback)
+            });
+
         })
 }
 
@@ -66,24 +69,20 @@ function createContent(feedback) {
     const div = document.createElement('div')
 
     const heading = document.createElement('h2')
-    heading.textContent = feedback.title
+
+    const a = document.createElement('a')
+    a.href = `/public/view.html?id=${feedback._id}`
+    a.textContent = feedback.title
 
     const type = document.createElement('p')
     type.textContent = feedback.type
-
-    const email = document.createElement('p')
-    email.textContent = feedback.email
-
-    const message = document.createElement('p')
-    message.textContent = feedback.message
 
     const created = document.createElement('p')
     created.textContent = new Date(feedback.created).toUTCString()
 
     div.appendChild(heading)
+    heading.appendChild(a)
     div.appendChild(type)
-    div.appendChild(email)
-    div.append(message)
     div.appendChild(created)
 
     feedbackCont.appendChild(div)
