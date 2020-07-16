@@ -80,13 +80,9 @@ function createContent(feedback) {
     const type = document.createElement('p')
     type.textContent = feedback.type
 
-    const created = document.createElement('p')
-    created.textContent = new Date(feedback.created).toUTCString()
-
     div.appendChild(heading)
     heading.appendChild(a)
     div.appendChild(type)
-    div.appendChild(created)
 
     feedbackCont.appendChild(div)
 }
