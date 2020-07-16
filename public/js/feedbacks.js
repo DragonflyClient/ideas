@@ -24,13 +24,16 @@ loadMoreBtn.addEventListener('click', function () {
 })
 
 window.addEventListener('load', () => {
-    listFeedback()
+    setTimeout(function () {
+        // updating values after the browser cache has been applied to the selections
+        order = orderSelection.options[orderSelection.selectedIndex].value === 'latest' ? -1 : 1
+        language = languageSelection.options[languageSelection.selectedIndex].value
+        listFeedback()
+    }, 0)
 })
 
 orderSelection.addEventListener('change', () => {
-    const value = orderSelection.options[orderSelection.selectedIndex].value
-    order = value === 'latest' ? -1 : 1
-
+    order = orderSelection.options[orderSelection.selectedIndex].value === 'latest' ? -1 : 1
     reloadAll()
 })
 
@@ -71,7 +74,7 @@ function createContent(feedback) {
     const heading = document.createElement('h2')
 
     const a = document.createElement('a')
-    a.href = `/public/view.html?id=${feedback._id}`
+    a.href = `view.html?id=${feedback._id}`
     a.textContent = feedback.title
 
     const type = document.createElement('p')
