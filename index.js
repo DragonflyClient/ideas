@@ -29,10 +29,11 @@ app.get('/feedback', (req, res) => {
     const limit = req.query.limit || 0
     const skip = req.query.skip || 0
     const order = parseInt(req.query.order) || 1
+    const language = req.query.language || 'all'
+    const query = language === 'all' ? {} : {lang: language}
 
-    console.log("Received feedback request", limit, skip, order)
-    feedbacks.count({}, function (error, count) {
-        feedbacks.find({}, {sort: {createdMs: order}, limit: parseInt(limit), skip: parseInt(skip)})
+    feedbacks.count(query, function (error, count) {
+        feedbacks.find(query, {sort: {createdMs: order}, limit: parseInt(limit), skip: parseInt(skip)})
             .then(feedbacks => {
                 let result = feedbacks
 
@@ -40,7 +41,6 @@ app.get('/feedback', (req, res) => {
                     result.push({end: true})
                 }
 
-                console.log(result)
                 res.json(result)
             })
     });

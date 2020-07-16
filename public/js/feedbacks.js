@@ -1,22 +1,21 @@
 const feedbackCont = document.querySelector('.feedbacks')
 const loadMoreBtn = document.getElementById('load')
 const orderSelection = document.getElementById('order')
+const languageSelection = document.getElementById('lang')
 const loadAmount = 2
 
 let order = -1
 let skip = 0
+let language = 'all'
 
 feedbackCont.innerText = "Loading..."
 
 loadMoreBtn.addEventListener('click', function () {
     skip += loadAmount
-    fetch(`http://localhost:3000/feedback?limit=${loadAmount}&expand=true&skip=${skip}&order=${order}`)
+    fetch(`http://localhost:3000/feedback?limit=${loadAmount}&expand=true&skip=${skip}&order=${order}&language=${language}`)
         .then(response => {
             response.json()
                 .then(feedbacks => {
-                    if (feedbacks.find(element => element.end === true) !== undefined) {
-                        loadMoreBtn.disabled = true
-                    }
                     feedbacks.forEach(feedback => createContent(feedback));
                 })
 
@@ -28,16 +27,21 @@ window.addEventListener('load', () => {
     listFeedback()
 })
 
-orderSelection.addEventListener('change', event => {
+orderSelection.addEventListener('change', () => {
     const value = orderSelection.options[orderSelection.selectedIndex].value
     order = value === 'latest' ? -1 : 1
 
     reloadAll()
-});
+})
+
+languageSelection.addEventListener('change', () => {
+    language = languageSelection.options[languageSelection.selectedIndex].value
+    reloadAll()
+})
 
 function listFeedback() {
     console.log("Loading feedback list from backend...")
-    fetch(`http://localhost:3000/feedback?limit=${loadAmount}&skip=0&order=${order}`)
+    fetch(`http://localhost:3000/feedback?limit=${loadAmount}&skip=0&order=${order}&language=${language}`)
         .then(response => response.json())
         .then(feedbacks => {
             feedbackCont.innerText = ''
@@ -47,7 +51,7 @@ function listFeedback() {
 
 function reloadAll() {
     console.log("Reloading all entries...")
-    fetch(`http://localhost:3000/feedback?limit=${loadAmount + skip}&skip=0&order=${order}`)
+    fetch(`http://localhost:3000/feedback?limit=${loadAmount + skip}&skip=0&order=${order}&language=${language}`)
         .then(response => response.json())
         .then(feedbacks => {
             feedbackCont.innerText = ''
@@ -56,6 +60,9 @@ function reloadAll() {
 }
 
 function createContent(feedback) {
+    loadMoreBtn.disabled = feedback.end
+    if (feedback.end) return
+
     const div = document.createElement('div')
 
     const heading = document.createElement('h2')
