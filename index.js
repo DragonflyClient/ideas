@@ -46,6 +46,14 @@ app.get('/feedback', (req, res) => {
     });
 })
 
+app.get('/id', (req, res) => {
+    const id = req.query.id
+    feedbacks.find({_id: id})
+        .then(found => {
+            res.json(found)
+        })
+})
+
 app.use(rateLimit({
     windowMs: 5 * 60 * 1000, // every 5 minutes
     max: 5,
@@ -54,6 +62,7 @@ app.use(rateLimit({
         msg: 'Too many requests'
     }
 }))
+
 app.post('/', (req, res) => {
     if (isValid(req.body)) {
         res.send(req.body)
