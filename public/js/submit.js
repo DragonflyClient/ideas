@@ -1,5 +1,6 @@
 const form = document.querySelector('#suggestion-form')
 const feedbackSelect = document.getElementById('feedback')
+const languageSelect = document.getElementById('language')
 const container = document.querySelector('.container')
 const warningCont = document.getElementById('warning')
 const submitBtn = document.getElementById('submit-btn')
@@ -12,11 +13,13 @@ form.addEventListener('submit', event => {
     const email = formData.get('email')
     const title = formData.get('subject')
     const message = formData.get('message')
-    const type = feedbackSelect.options[feedbackSelect.selectedIndex].value;
+    const type = feedbackSelect.options[feedbackSelect.selectedIndex].value
+    const lang = languageSelect.options[languageSelect.selectedIndex].value
 
     const feedback = {
         email,
         type,
+        lang,
         title,
         message
     }

@@ -57,19 +57,21 @@ app.use(rateLimit({
 app.post('/', (req, res) => {
     if (isValid(req.body)) {
         res.send(req.body)
+        console.log("request: ", req.body)
         const feedback = {
             type: req.body.type,
             title: req.body.title,
             message: req.body.message,
             created: new Date(),
-            createdMs: new Date().getTime()
+            createdMs: new Date().getTime(),
+            lang: req.body.lang
         }
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         if (req.body.email !== '' && req.body.email.match(re)) {
             feedback.email = req.body.email
         }
-        feedbacks
-            .insert(feedback)
+
+        feedbacks.insert(feedback)
         console.log(feedback)
     } else {
         res.status(422)
