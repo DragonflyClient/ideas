@@ -28,18 +28,19 @@ function isValid(feedback) {
 app.get('/feedback', (req, res) => {
     const limit = req.query.limit || 0
     const skip = req.query.skip || 0
+    const order = parseInt(req.query.order) || 1
+
+    console.log("Received feedback request", limit, skip, order)
     feedbacks.count({}, function (error, count) {
-
-        feedbacks.find({}, { limit: parseInt(limit), skip: parseInt(skip) })
+        feedbacks.find({}, {sort: {createdMs: order}, limit: parseInt(limit), skip: parseInt(skip)})
             .then(feedbacks => {
+                let result = feedbacks
 
-                const result = feedbacks.reverse()
                 if (count <= parseInt(skip) + parseInt(limit)) {
-                    result.push({
-                        end: true
-                    })
+                    result.push({end: true})
                 }
 
+                console.log(result)
                 res.json(result)
             })
     });
