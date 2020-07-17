@@ -83,6 +83,10 @@ function escape(msg) {
   return msg.replace("<", "&lt;").replace(">", "&gt;");
 }
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function createElmt(html) {
   var div = document.createElement("div");
   div.innerHTML = escape(html);
@@ -94,6 +98,7 @@ function createContent(feedback) {
   if (feedback.end) return;
 
   const div = document.createElement("div");
+  div.classList.add('fb')
 
   const heading = document.createElement("h2");
 
@@ -102,7 +107,7 @@ function createContent(feedback) {
   a.textContent = feedback.title;
 
   const type = document.createElement("p");
-  type.textContent = feedback.type;
+  type.textContent = capitalizeFirstLetter(feedback.type);
 
   div.appendChild(heading);
   heading.appendChild(a);

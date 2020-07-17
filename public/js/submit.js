@@ -8,11 +8,13 @@ const submitBtn = document.getElementById('submit-btn')
 // submit suggestion
 form.addEventListener('submit', event => {
     event.preventDefault()
+    var editor_content = quill.container.firstChild.innerHTML
 
+    console.log(editor_content)
     const formData = new FormData(form)
     const email = formData.get('email')
     const title = formData.get('subject')
-    const message = CKEDITOR.instances.message.getData()
+    const message = editor_content
     const type = feedbackSelect.options[feedbackSelect.selectedIndex].value
     const lang = languageSelect.options[languageSelect.selectedIndex].value
 
@@ -48,7 +50,7 @@ form.addEventListener('submit', event => {
                             warningCont.innerHTML = ''
                         }, 4500)
                         form.reset()
-                        CKEDITOR.instances.message.setData("")
+                        quill.container.firstChild.innerHTML = ""
                     })
                     .catch((error) => {
                         console.error('Error:', error);
