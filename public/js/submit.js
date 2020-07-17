@@ -12,7 +12,7 @@ form.addEventListener('submit', event => {
     const formData = new FormData(form)
     const email = formData.get('email')
     const title = formData.get('subject')
-    const message = formData.get('message')
+    const message = CKEDITOR.instances.message.getData()
     const type = feedbackSelect.options[feedbackSelect.selectedIndex].value
     const lang = languageSelect.options[languageSelect.selectedIndex].value
 
@@ -48,6 +48,7 @@ form.addEventListener('submit', event => {
                             warningCont.innerHTML = ''
                         }, 4500)
                         form.reset()
+                        CKEDITOR.instances.message.setData("")
                     })
                     .catch((error) => {
                         console.error('Error:', error);

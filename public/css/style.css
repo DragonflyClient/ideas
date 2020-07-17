@@ -1,3 +1,14 @@
 * {
     box-sizing: border-box;
 }
+
+.details {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.created-at {
+    color: rgb(143, 143, 143);
+}

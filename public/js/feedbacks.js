@@ -11,12 +11,16 @@ let language = "all";
 feedbackCont.innerText = "Loading...";
 
 loadMoreBtn.addEventListener("click", function () {
+  loadMoreBtn.innerText = "Loading..."
   skip += loadAmount;
   fetch(
     `http://localhost:3000/feedback?limit=${loadAmount}&expand=true&skip=${skip}&order=${order}&language=${language}`
   ).then((response) => {
     response.json().then((feedbacks) => {
-      feedbacks.forEach((feedback) => createContent(feedback));
+      feedbacks.forEach((feedback) => {
+        createContent(feedback)
+        loadMoreBtn.innerText = "Load More"
+      });
     });
   });
 });
@@ -60,9 +64,10 @@ function listFeedback() {
 
 function reloadAll() {
   console.log("Reloading all entries...");
+  feedbackCont.innerText = "Loading..."
   fetch(
     `http://localhost:3000/feedback?limit=${
-      loadAmount + skip
+    loadAmount + skip
     }&skip=0&order=${order}&language=${language}`
   )
     .then((response) => response.json())

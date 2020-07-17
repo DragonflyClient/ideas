@@ -65,12 +65,12 @@ app.get("/id", (req, res) => {
       res.json(found);
     });
   } else {
-      res.status(404)
-      res.json({
-          status: 404,
-          msg: 'Feedback not found',
-          id
-      })
+    res.status(404)
+    res.json({
+      status: 404,
+      msg: 'Feedback not found',
+      id
+    })
   }
 });
 
@@ -103,7 +103,7 @@ app.post("/", (req, res) => {
     }
 
     feedbacks.insert(feedback);
-    console.log(feedback);
+    console.log("db: ", feedback);
   } else {
     res.status(422);
     res.json({
