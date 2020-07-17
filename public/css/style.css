@@ -32,12 +32,92 @@
 }
 
 /* FB list */
+.feedbacks {
+    width: 85%;
+}
 
 .fb {
-    border-top: 2px solid rgba(3, 123, 252, .6);
-    padding: 25px 0;
+    border-top: 1px solid #353b48;
+    margin-bottom: 20px;
+    padding-left: 0px;
+    padding-bottom: 10px;
+}
+
+.fb p {
+    color: rgba(37, 37, 37, 0.6)
+}
+
+.fb a {
+    display: block;
+    padding-top: 25px;
+    padding-right: 25px;
+    border-radius: 5px;
+    color: #056ddb !important;
 }
 
 .fb p {
     margin: 0;
+}
+
+.container1 {
+    margin-left: 390px !important;
+}
+
+#load {
+    width: 82%;
+    transform: translateX(0%);
+    margin: 0 auto;
+    margin: 20px;
+}
+
+.sidenav {
+    height: 90%;
+    width: 350px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow: hidden;
+    margin-top: 30px;
+    padding-top: 40px;
+    padding-right: 25px !important;
+    border-right: 2px solid rgba(199, 200, 201, 0.6);
+}
+
+
+@media (max-width: 950px) {
+    .container1 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidenav {
+        position: initial;
+        width: 100%;
+        margin-top: 0 !important;
+        padding: 0 !important;
+        padding: 0 17px !important;
+    }
+
+    .sidenav .my-3 {
+        margin: 10px 0 !important;
+    }
+
+    .sidenav>* {
+        padding: 0 !important;
+    }
+
+    .container1 {
+        margin-left: 0 !important;
+    }
+
+    .feedbacks {
+        width: 100%;
+    }
+
+    #load {
+        width: 95% !important;
+        max-width: 100% !important;
+    }
 }

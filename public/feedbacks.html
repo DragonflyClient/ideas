@@ -11,31 +11,37 @@
 </head>
 
 <body>
-    <div class="container">
-        <label for="order" class="my-3">Order
-            <select class="form-control" id="order">
-                <option value="latest">Latest to oldest</option>
-                <option value="oldest">Oldest to latest</option>
-            </select>
-        </label>
-        <label for="lang" class="m-3">Language
-            <select class="form-control" id="lang">
-                <option value="all">All</option>
-                <option value="en">English</option>
-                <option value="de">Deutsch</option>
-            </select>
-        </label>
-        <label for="type" class="m-3">Type
-            <select class="form-control" id="type">
-                <option value="all">All</option>
-                <option value="suggestion">Suggestion</option>
-                <option value="bugreport">Bug</option>
-                <option value="comment">Comment</option>
-            </select>
-        </label>
-        <div class="feedbacks mt-3">
+    <div class="page-wrapper">
+        <div class="container1">
+            <h2 class="my-4 px-3">Feedback overview</h2>
+            <div class="sidenav flex-column px-4">
+                <label for="order" class="my-3 col-md-12">Order
+                    <select class="custom-select my-2" id="order">
+                        <option value="latest">Latest to oldest</option>
+                        <option value="oldest">Oldest to latest</option>
+                    </select>
+                </label>
+                <label for="lang" class="my-3 col-md-12">Language
+                    <select class="custom-select my-2" id="lang">
+                        <option value="all">All</option>
+                        <option value="en">English</option>
+                        <option value="de">Deutsch</option>
+                    </select>
+                </label>
+                <label for="type" class="my-3 col-md-12">Type
+                    <select class="custom-select my-2" id="type">
+                        <option value="all">All</option>
+                        <option value="suggestion">Suggestion</option>
+                        <option value="bugreport">Bug</option>
+                        <option value="comment">Comment</option>
+                    </select>
+                </label>
+            </div>
+            <div class="feedbacks px-3 mt-3">
+            </div>
+            <button type="button" id="load" class="form btn btn-outline-primary">Load
+                more</button>
         </div>
-        <button class="form-control btn btn-primary btn-md my-5" id="load">Load More</button>
     </div>
 
     <script src="./js/feedbacks.js"></script>

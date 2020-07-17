@@ -117,7 +117,7 @@ function createContent(feedback) {
    const div = document.createElement("div");
    div.classList.add('fb')
 
-   const heading = document.createElement("h2");
+   const heading = document.createElement("h3");
 
    const a = document.createElement("a");
    a.href = `view.html?id=${feedback._id}`;

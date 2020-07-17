@@ -9,8 +9,6 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css" />
-  <style>
-  </style>
 </head>
 
 <body>
@@ -47,18 +45,25 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="subject">Title</label>
-        <input type="text" class="form-control" id="subject" aria-describedby="emailHelp" placeholder="About.."
-          name="subject" />
+
+        <label for="subject">Title <span class="text-danger">*</span></label>
+        <input type="text" minlength="10" maxlength="100" class="form-control" id="subject" aria-describedby="emailHelp"
+          placeholder="About.." name="subject" />
       </div>
-      <label for="message1">Message</label>
+      <label for="message1">Message <span class="text-danger">*</span></label>
       <div class="form-group" id="message1">
         <textarea class="form-control" name="message" id="message" style="resize: none;" rows="15"></textarea>
       </div>
-      <input id="attachments" type="file" accept="image/png, image/jpeg, image/gif" multiple>
+      <div class="custom-file my-4">
+        <label for="attachments" class="custom-file-label">Attachments</label>
+        <input id="attachments" class="custom-file-input" type="file" accept="image/png, image/jpeg, image/gif"
+          multiple>
+      </div>
       <button type="submit" id="submit-btn" class="btn btn-primary">
         Submit
       </button>
+      <hr>
+      <p class="form-text text-muted"><span class="text-danger">*</span> Required</p>
     </form>
   </div>
   <div id="warning" class="container"></div>

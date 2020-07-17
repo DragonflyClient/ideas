@@ -7,7 +7,7 @@ const submitBtn = document.getElementById('submit-btn')
 const attachmentsInput = document.getElementById("attachments")
 
 // submit suggestion
-form.addEventListener('submit', async function(event) {
+form.addEventListener('submit', async function (event) {
    event.preventDefault()
    const formData = new FormData(form)
    const email = formData.get('email')
@@ -20,7 +20,7 @@ form.addEventListener('submit', async function(event) {
    for (let file of attachmentsInput.files) {
       let link = await upload(file)
 
-      if(link) {
+      if (link) {
          attachments.push(link)
       } else {
          attachmentsInput.value = ''
@@ -74,6 +74,7 @@ form.addEventListener('submit', async function(event) {
                }, 4500)
                form.reset()
                quill.container.firstChild.innerHTML = ""
+               document.getElementById('alert').remove()
             })
             .catch((error) => {
                console.error('Error:', error);
@@ -96,10 +97,8 @@ form.addEventListener('submit', async function(event) {
                   const div = document.createElement('div')
                   div.classList.add('alert', 'alert-danger')
                   div.setAttribute('role', 'alert')
+                  div.setAttribute('id', 'alert')
                   div.textContent = err.msg
-                  // warningCont.innerHTML += `<div class="alert alert-danger" role="alert">
-                  //                             ${err.msg}
-                  //                      </div>`
                   container.insertBefore(div, container.firstChild);
                }, 50)
             })
