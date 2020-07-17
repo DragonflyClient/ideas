@@ -19,7 +19,22 @@ form.addEventListener('submit', async function(event) {
 
    for (let file of attachmentsInput.files) {
       let link = await upload(file)
-      attachments.push(link)
+
+      if(link) {
+         attachments.push(link)
+      } else {
+         attachmentsInput.value = ''
+         warningCont.innerHTML = ''
+         container.removeChild(container.childNodes[0])
+         setTimeout(function () {
+            const div = document.createElement('div')
+            div.classList.add('alert', 'alert-danger')
+            div.setAttribute('role', 'alert')
+            div.textContent = "Could not upload attachment! Probably unsupported file type."
+            container.insertBefore(div, container.firstChild);
+         }, 50)
+         return
+      }
    }
 
    const feedback = {

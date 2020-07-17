@@ -85,10 +85,14 @@ function reloadAll() {
    )
       .then((response) => response.json())
       .then((feedbacks) => {
-         feedbackCont.innerText = ""
-         feedbacks.forEach((feedback) => {
-            createContent(feedback);
-         });
+         if (feedbacks.length > 0 && feedbacks[0].end !== true) {
+            feedbackCont.innerText = ""
+            feedbacks.forEach((feedback) => {
+               createContent(feedback);
+            });
+         } else {
+            feedbackCont.innerText = "No items apply to the given filters!"
+         }
       });
 }
 
