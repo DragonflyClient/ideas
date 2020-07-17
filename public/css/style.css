@@ -27,7 +27,8 @@
 
 /* Submit */
 #message1 {
-    height: 350px;
+    min-height: 300px;
+    overflow: auto;
 }
 
 /* FB list */
