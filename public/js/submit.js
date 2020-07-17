@@ -66,10 +66,16 @@ form.addEventListener('submit', event => {
                             submitBtn.disabled = false
                         }, 30000)
                         warningCont.innerHTML = ''
+                        container.removeChild(container.childNodes[0])
                         setTimeout(function () {
-                            warningCont.innerHTML += `<div class="alert alert-danger" role="alert">
-                                                        ${err.msg}
-                                                  </div>`
+                            const div = document.createElement('div')
+                            div.classList.add('alert', 'alert-danger')
+                            div.setAttribute('role', 'alert')
+                            div.textContent = err.msg
+                            // warningCont.innerHTML += `<div class="alert alert-danger" role="alert">
+                            //                             ${err.msg}
+                            //                      </div>`
+                            container.insertBefore(div, container.firstChild);
                         }, 50)
                     })
             }

@@ -6,6 +6,10 @@ function escape(msg) {
   return msg.replace("<", "&lt;").replace(">", "&gt;");
 }
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function createElmt(html) {
   var div = document.createElement("div");
   div.innerHTML = escape(html);
@@ -36,7 +40,7 @@ fetch(`http://localhost:3000/id?id=${feedbackId}`)
 
     } else {
       // display id page
-      document.title = escape(`${result.title} | ${result.type}`);
+      document.title = escape(`${result.title} | ${capitalizeFirstLetter(result.type)}`);
 
       const details = document.createElement('div')
       details.classList.add('details')

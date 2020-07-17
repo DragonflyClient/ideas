@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
   <link rel="stylesheet" href="./css/style.css" />
+  <style>
+  </style>
 </head>
 
 <body>
@@ -20,20 +22,26 @@
           placeholder="Enter email" />
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
       </div>
-      <div class="form-group">
-        <label for="feedback">Feedback type</label>
-        <select class="form-control" name="feedback" id="feedback">
-          <option value="bugreport">Bug</option>
-          <option value="suggestion">Suggestion</option>
-          <option value="comment">Comment</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="language">Language</label>
-        <select class="form-control" name="language" id="language">
-          <option value="en" selected>English</option>
-          <option value="de">Deutsch</option>
-        </select>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="feedback">Feedback type</label>
+            <select class="form-control" name="feedback" id="feedback">
+              <option value="bugreport">Bug</option>
+              <option value="suggestion">Suggestion</option>
+              <option value="comment">Comment</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="language">Language</label>
+            <select class="form-control" name="language" id="language">
+              <option value="en" selected>English</option>
+              <option value="de">Deutsch</option>
+            </select>
+          </div>
+        </div>
       </div>
       <div class="form-group">
         <label for="subject">Title</label>
@@ -42,7 +50,7 @@
       </div>
       <div class="form-group">
         <label for="message">Message</label>
-        <textarea class="form-control" name="message" id="message" style="resize: none;" rows="5"></textarea>
+        <textarea class="form-control" name="message" id="message" style="resize: none;" rows="15"></textarea>
       </div>
       <button type="submit" id="submit-btn" class="btn btn-primary">
         Submit
@@ -63,7 +71,9 @@
   <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
   <script src="./js/submit.js"></script>
   <script>
-    CKEDITOR.replace('message');
+    CKEDITOR.replace('message', {
+      height: 250
+    });
   </script>
 </body>
 
