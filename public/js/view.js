@@ -1,7 +1,6 @@
 const feedbackId = new URL(window.location.href).searchParams.get("id");
 const cont = document.querySelector(".container");
 
-// TODO: edit script function so that only script tags are replaced
 function escape(msg) {
    return msg.replace("<", "&lt;").replace(">", "&gt;");
 }
@@ -16,7 +15,7 @@ function createElmt(html) {
    return div.childNodes[0];
 }
 
-fetch(`http://localhost:3000/id?id=${feedbackId}`)
+fetch(`https://ideas-api.inceptioncloud.net/id?id=${feedbackId}`)
    .then((response) => response.json())
    .then((response) => {
       const result = response[0];
@@ -87,11 +86,16 @@ fetch(`http://localhost:3000/id?id=${feedbackId}`)
          date.innerText = moment(result.created).fromNow();
          date.classList.add('created')
 
+         const hrTop = document.createElement('hr')
+         const hrBot = document.createElement('hr')
+
          details.appendChild(h2);
          details.appendChild(lang)
          cont.appendChild(details)
          cont.appendChild(date);
+         cont.appendChild(hrTop)
          cont.appendChild(message);
+         cont.appendChild(hrBot)
          cont.appendChild(attachments)
       }
    });

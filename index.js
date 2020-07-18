@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const app = express();
 const rateLimit = require("express-rate-limit");
 const credentials = require("./creds");
-const {ObjectId} = require("mongodb");
+const { ObjectId } = require("mongodb");
 const db = monk(
    `mongodb://${credentials.db.username}:${credentials.db.password}@45.85.219.34:27017/dragonfly`
 );
@@ -16,7 +16,7 @@ db.then(() => {
 });
 
 app.use(cors());
-app.use(bodyParser({limit: '2mb'}));
+app.use(bodyParser({ limit: '2mb' }));
 
 app.use(express.json());
 
@@ -25,15 +25,15 @@ app.get("/", (req, res) => {
 });
 
 function isValid(feedback) {
-  // if(feedback.message.replace(/(<([^>]+)>)/ig,"") === "") {
-  //   return false;
-  // }
+   // if(feedback.message.replace(/(<([^>]+)>)/ig,"") === "") {
+   //   return false;
+   // }
    return (
       feedback.title &&
       feedback.title.toString().trim() !== "" &&
       feedback.message &&
       feedback.message.toString().trim() !== "" &&
-      feedback.message.toString().replace(/(<([^>]+)>)/ig,"") !== ""
+      feedback.message.toString().replace(/(<([^>]+)>)/ig, "") !== ""
    );
 }
 
@@ -57,7 +57,7 @@ app.get("/feedback", (req, res) => {
    feedbacks.count(query, function (error, count) {
       feedbacks
          .find(query, {
-            sort: {createdMs: order},
+            sort: { createdMs: order },
             limit: parseInt(limit),
             skip: parseInt(skip),
          })
@@ -65,9 +65,11 @@ app.get("/feedback", (req, res) => {
             let result = feedbacks;
             // feedbacks[0].total = count
             if (count <= parseInt(skip) + parseInt(limit)) {
-               result.push({end: true});
+               result.push({ end: true });
             }
-
+            result.forEach(element => {
+               element.email = null
+            });
             res.json(result);
          });
    });
@@ -77,7 +79,7 @@ app.get("/id", (req, res) => {
    const id = req.query.id;
    const validId = ObjectId.isValid(id);
    if (validId) {
-      feedbacks.find({_id: id}).then((found) => {
+      feedbacks.find({ _id: id }).then((found) => {
          res.json(found);
       });
    } else {

@@ -5,16 +5,11 @@ const container = document.querySelector('.container')
 const warningCont = document.getElementById('warning')
 const submitBtn = document.getElementById('submit-btn')
 const attachmentsInput = document.getElementById("attachments")
-const loading = document.querySelector('.loading')
 
-window.onload = () => {
-   loading.style.display = "none"
-}
 // submit suggestion
 form.addEventListener('submit', async function (event) {
    event.preventDefault()
-   container.style.display = "none"
-   loading.style.display = "block"
+
    const formData = new FormData(form)
    const email = formData.get('email')
    const title = formData.get('subject')
@@ -31,13 +26,13 @@ form.addEventListener('submit', async function (event) {
       } else {
          attachmentsInput.value = ''
          warningCont.innerHTML = ''
-         container.removeChild(container.childNodes[0])
          setTimeout(function () {
-            const div = document.createElement('div')
-            div.classList.add('alert', 'alert-danger')
-            div.setAttribute('role', 'alert')
-            div.textContent = "Could not upload attachment! Probably unsupported file type."
-            container.insertBefore(div, container.firstChild);
+            Swal.fire({
+               title: 'Error!',
+               text: "Could not upload attachment. Probably bad file type.",
+               icon: 'error',
+               confirmButtonText: 'Got it'
+            })
          }, 50)
          return
       }
@@ -53,35 +48,30 @@ form.addEventListener('submit', async function (event) {
 
    if (attachments.length > 0) {
       feedback.attachments = attachments
+      console.log("aloha")
    }
 
-   fetch('http://localhost:3000', {
+   fetch('https://ideas-api.inceptioncloud.net', {
       method: 'POST', // or 'PUT'
       headers: {
          'Content-Type': 'application/json',
       },
       body: JSON.stringify(feedback),
    }).then(response => {
-      loading.style.display = "none"
-      container.style.display = ""
       if (response.ok) {
          response.json()
             .then(feedback => {
-               console.log('Success:', feedback);
                warningCont.innerHTML = ''
-               warningCont.innerHTML += `<div class="alert alert-success mt-5" role="alert">
-                                    <h4 class="alert-heading">Well done!</h4>
-                                    <p>Your <span>${feedback.type}</span> with the title <span>"${feedback.title.replace('<', '&lt;').replace('>', '&gt;')}"</span> was successfully sent!</p>
-                                    <hr>
-                                    <a href="" class="mb-0">Write a new ticket</a>
-                                    </div>`
+               Swal.fire(
+                  'Good job!',
+                  `Your feedback with the title "${feedback.title.replace('<', '&lt;').replace('>', '&gt;')} was successfully sent!`,
+                  'success'
+               )
                setTimeout(function () {
-                  container.style.display = ''
                   warningCont.innerHTML = ''
                }, 4500)
                form.reset()
                quill.container.firstChild.innerHTML = ""
-               document.getElementById('alert').remove()
             })
             .catch((error) => {
                console.error('Error:', error);
@@ -99,14 +89,13 @@ form.addEventListener('submit', async function (event) {
                   submitBtn.disabled = false
                }, 30000)
                warningCont.innerHTML = ''
-               container.removeChild(container.childNodes[0])
                setTimeout(function () {
-                  const div = document.createElement('div')
-                  div.classList.add('alert', 'alert-danger')
-                  div.setAttribute('role', 'alert')
-                  div.setAttribute('id', 'alert')
-                  div.textContent = err.msg
-                  container.insertBefore(div, container.firstChild);
+                  Swal.fire({
+                     title: 'Error!',
+                     text: err.msg,
+                     icon: 'error',
+                     confirmButtonText: 'Got it'
+                  })
                }, 50)
             })
       }
