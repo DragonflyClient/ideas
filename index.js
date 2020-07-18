@@ -25,11 +25,15 @@ app.get("/", (req, res) => {
 });
 
 function isValid(feedback) {
+  // if(feedback.message.replace(/(<([^>]+)>)/ig,"") === "") {
+  //   return false;
+  // }
    return (
       feedback.title &&
       feedback.title.toString().trim() !== "" &&
       feedback.message &&
-      feedback.message.toString().trim() !== ""
+      feedback.message.toString().trim() !== "" &&
+      feedback.message.toString().replace(/(<([^>]+)>)/ig,"") !== ""
    );
 }
 
@@ -59,7 +63,7 @@ app.get("/feedback", (req, res) => {
          })
          .then((feedbacks) => {
             let result = feedbacks;
-
+            // feedbacks[0].total = count
             if (count <= parseInt(skip) + parseInt(limit)) {
                result.push({end: true});
             }

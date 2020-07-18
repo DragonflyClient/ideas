@@ -5,10 +5,16 @@ const container = document.querySelector('.container')
 const warningCont = document.getElementById('warning')
 const submitBtn = document.getElementById('submit-btn')
 const attachmentsInput = document.getElementById("attachments")
+const loading = document.querySelector('.loading')
 
+window.onload = () => {
+   loading.style.display = "none"
+}
 // submit suggestion
 form.addEventListener('submit', async function (event) {
    event.preventDefault()
+   container.style.display = "none"
+   loading.style.display = "block"
    const formData = new FormData(form)
    const email = formData.get('email')
    const title = formData.get('subject')
@@ -56,11 +62,12 @@ form.addEventListener('submit', async function (event) {
       },
       body: JSON.stringify(feedback),
    }).then(response => {
+      loading.style.display = "none"
+      container.style.display = ""
       if (response.ok) {
          response.json()
             .then(feedback => {
                console.log('Success:', feedback);
-               container.style.display = "none"
                warningCont.innerHTML = ''
                warningCont.innerHTML += `<div class="alert alert-success mt-5" role="alert">
                                     <h4 class="alert-heading">Well done!</h4>

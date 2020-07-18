@@ -43,7 +43,7 @@ fetch(`http://localhost:3000/id?id=${feedbackId}`)
          document.title = escape(`${result.title} | ${capitalizeFirstLetter(result.type)}`);
 
          const details = document.createElement('div')
-         details.classList.add('details')
+         details.classList.add('details', 'view')
 
          const h2 = document.createElement("h2");
          h2.appendChild(createElmt(result.title));
@@ -79,6 +79,7 @@ fetch(`http://localhost:3000/id?id=${feedbackId}`)
          lang.appendChild(flag)
 
          const message = document.createElement("p");
+         message.classList.add('ql-editor', 'non-edit')
          message.innerHTML = result.message;
          // message.appendChild(createElmt(result.message));
 
