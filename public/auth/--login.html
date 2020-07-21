@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Login</title>
+   </head>
+   <body>
+      <form id="form">
+         <label for="name">Username</label>
+         <input type="text" name="name" id="name">
+         <label for="password">Password</label>
+         <input type="password" name="password" id="password">
+         <input type="submit" value="Login">
+      </form>
+   </body>
+
+   <script>
+      const form = document.getElementById("form")
+
+      form.addEventListener('submit', event => {
+         event.preventDefault()
+         const formData = new FormData(form)
+         const name = formData.get("name")
+         const password = formData.get("password")
+         const body = {
+            "name": name,
+            "password": password
+         }
+
+         fetch("http://localhost:1414/login", {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+               "Content-Type": "application/json"
+            }
+         }).then(result => result.json())
+            .then(result => {
+               if (result.success) {
+                  const username = result.username
+                  const token = result.token
+
+                  localStorage.setItem('dragonfly-token', token)
+                  console.log(token)
+
+                  // handle login success
+               } else {
+                  const error = result.error
+                  console.log(error)
+                  // handle login no success
+               }
+            })
+      });
+   </script>
+</html>
