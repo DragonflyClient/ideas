@@ -16,7 +16,7 @@ fetch(`http://localhost:3000/id?id=${feedbackId}`, {  // TODO: Change
     .then((response) => response.json())
     .then((response) => {
         console.log(response)
-        if (response === undefined) {
+        if (response.status) {
             // Id not found
             document.title = "Not found"
             const div = document.createElement('div')

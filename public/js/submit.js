@@ -48,10 +48,9 @@ form.addEventListener('submit', async function (event) {
 
    if (attachments.length > 0) {
       feedback.attachments = attachments
-      console.log("aloha")
    }
 
-   fetch('https://ideas-api.inceptioncloud.net', {
+   fetch('http://localhost:3000', {
       method: 'POST', // or 'PUT'
       headers: {
          'Content-Type': 'application/json',

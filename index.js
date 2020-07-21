@@ -51,44 +51,50 @@ app.get("/feedback", (req, res) => {
     const order = parseInt(req.query.order) || 1;
     const language = req.query.language || "all";
     const type = req.query.type || "all"
+    const upvotesOrder = parseInt(req.query.upvotesorder)
 
+    const sortQuery = {}
     const query = {}
 
     if (language !== "all") {
         query.lang = language
     }
-
     if (type !== "all") {
         query.type = type
     }
 
+    if (upvotesOrder && upvotesOrder !== 0) {
+        sortQuery.upvotesAmount = upvotesOrder
+    }
+    sortQuery.createdMs = order
+
+    console.log("sort query", sortQuery)
+
     feedbacks.count(query, function (error, count) {
         feedbacks
             .find(query, {
-                sort: {createdMs: order},
                 limit: parseInt(limit),
                 skip: parseInt(skip),
+                sort: sortQuery
             })
             .then((feedbacks) => {
                 let result = feedbacks;
-                // feedbacks[0].total = count
-                if (count <= parseInt(skip) + parseInt(limit)) {
-                    result.push({end: true});
-                }
+
                 result.forEach(element => {
-                    const upvotes = element.upvotes
-                    if (upvotes) {
-                        element.upvotes = null
-                        element.upvotesAmount = upvotes.length
-                    }
+                    element.upvotes = null
                     element.email = null
-                });
+                })
+
+                if (count <= parseInt(skip) + parseInt(limit)) {
+                    result.push({end: true})
+                }
+
                 res.json(result);
             });
     });
 });
 
-app.get("/id", async function(req, res) {
+app.get("/id", async function (req, res) {
     const id = req.query.id;
     const authorization = req.header("Authorization")
     const account = await validateToken(authorization)
@@ -105,15 +111,10 @@ app.get("/id", async function(req, res) {
             }
 
             const info = found[0]
-            const upvotes = found[0].upvotes
+            const upvotes = found[0].upvotes || []
             info.email = null
+            info.upvotes = null
 
-            if (upvotes) {
-                info.upvotes = null
-                info.upvotesAmount = upvotes.length
-            }
-
-            console.log("account", account)
             if (account) {
                 info.upvoted = upvotes.contains(account.identifier)
             }
@@ -129,6 +130,17 @@ app.get("/id", async function(req, res) {
             })
         })
 });
+
+app.use(
+    rateLimit({
+        windowMs: 60 * 1000, // every minute
+        max: 5,
+        message: {
+            status: 429,
+            msg: "Too many requests",
+        },
+    })
+);
 
 app.get("/auth/upvote", (req, res) => {
     const authorization = req.header("Authorization")
@@ -146,7 +158,12 @@ app.get("/auth/upvote", (req, res) => {
                     added = true
                 }
 
-                feedbacks.update({_id: id}, {$set: {upvotes: upvotes}})
+                feedbacks.update({_id: id}, {
+                    $set: {
+                        upvotes: upvotes,
+                        upvotesAmount: upvotes.length
+                    }
+                })
                 res.json({
                     success: true,
                     added: added,
@@ -172,20 +189,8 @@ app.get("/auth/upvote", (req, res) => {
     })
 })
 
-app.use(
-    rateLimit({
-        windowMs: 5 * 60 * 1000, // every 5 minutes
-        max: 5,
-        message: {
-            status: 429,
-            msg: "Too many requests",
-        },
-    })
-);
-
 app.post("/", (req, res) => {
     if (isValid(req.body)) {
-        console.log("request: ", req.body);
         const feedback = {
             type: req.body.type,
             title: req.body.title,
@@ -193,7 +198,8 @@ app.post("/", (req, res) => {
             created: new Date(),
             createdMs: new Date().getTime(),
             lang: req.body.lang,
-            upvotes: []
+            upvotes: [],
+            upvotesAmount: 0
         };
 
         if (req.body.attachments && req.body.attachments.length > 0) {
@@ -205,7 +211,6 @@ app.post("/", (req, res) => {
             feedback.email = req.body.email;
         }
 
-        console.log("db: ", feedback);
         feedbacks.insert(feedback);
         res.send(req.body);
     } else {

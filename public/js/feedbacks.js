@@ -3,12 +3,14 @@ const loadMoreBtn = document.getElementById("load");
 const orderSelection = document.getElementById("order");
 const languageSelection = document.getElementById("lang");
 const typeSelection = document.getElementById("type");
+const upvotesOrderSelection = document.getElementById("upvotes-order");
 const loadAmount = 10;
 
 let order = -1
 let skip = 0
 let language = "all"
 let type = "all"
+let upvotesOrder = "-1"
 
 feedbackCont.innerText = "Loading...";
 loadMoreBtn.style.display = 'none'
@@ -17,12 +19,13 @@ loadMoreBtn.addEventListener("click", function () {
     loadMoreBtn.innerText = "Loading..."
     skip += loadAmount;
     fetch(
-        `https://ideas-api.inceptioncloud.net/feedback`
+        `http://localhost:3000/feedback`
         + `?limit=${loadAmount}`
         + `&skip=${skip}`
         + `&order=${order}`
         + `&language=${language}`
         + `&type=${type}`
+        + `&upvotesorder=${upvotesOrder}`
     ).then((response) => {
         response.json().then((feedbacks) => {
             feedbacks.forEach((feedback) => {
@@ -57,32 +60,21 @@ typeSelection.addEventListener("change", () => {
     reloadAll();
 });
 
+upvotesOrderSelection.addEventListener("change", () => {
+    upvotesOrder = upvotesOrderSelection.options[upvotesOrderSelection.selectedIndex].value;
+    reloadAll();
+});
+
 function listFeedback() {
     console.log("Loading feedback list from backend...");
-    const header = localStorage.getItem("dragonfly-token")
-    // fetch(
-    //    `https://ideas-api.inceptioncloud.net/feedback`
-    //    + `?limit=${loadAmount}`
-    //    + `&skip=0`
-    //    + `&order=${order}`
-    //    + `&language=${language}`
-    //    + `&type=${type}`
-    // )
-    //    .then((response) => response.json())
-    //    .then((feedbacks) => {
-    //       feedbackCont.innerText = "";
-    //       loadMoreBtn.style.display = 'block'
-    //       // document.getElementById('total').innerText = `All: ${feedbacks[0].total}`
-    //       feedbacks.forEach((feedback) => createContent(feedback));
-    //    });
-
     fetch(
         `http://localhost:3000/feedback`
         + `?limit=${loadAmount}`
         + `&skip=0`
         + `&order=${order}`
         + `&language=${language}`
-        + `&type=${type}`,
+        + `&type=${type}`
+        + `&upvotesorder=${upvotesOrder}`,
     )
         .then((response) => response.json())
         .then((feedbacks) => {
@@ -94,16 +86,14 @@ function listFeedback() {
 
 function reloadAll() {
     console.log("Reloading all entries...");
-    // const loadingInfo = document.createElement('div')
-    // loadingInfo.textContent = 'Reloading all entries...'
-    // feedbackCont.insertBefore(loadingInfo, feedbackCont.firstChild);
     fetch(
-        `https://ideas-api.inceptioncloud.net/feedback`
+        `http://localhost:3000/feedback`
         + `?limit=${loadAmount + skip}`
         + `&skip=0`
         + `&order=${order}`
         + `&language=${language}`
         + `&type=${type}`
+        + `&upvotesorder=${upvotesOrder}`
     )
         .then((response) => response.json())
         .then((feedbacks) => {
