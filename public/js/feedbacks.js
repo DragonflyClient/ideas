@@ -14,142 +14,156 @@ feedbackCont.innerText = "Loading...";
 loadMoreBtn.style.display = 'none'
 
 loadMoreBtn.addEventListener("click", function () {
-   loadMoreBtn.innerText = "Loading..."
-   skip += loadAmount;
-   fetch(
-      `https://ideas-api.inceptioncloud.net/feedback`
-      + `?limit=${loadAmount}`
-      + `&skip=${skip}`
-      + `&order=${order}`
-      + `&language=${language}`
-      + `&type=${type}`
-   ).then((response) => {
-      response.json().then((feedbacks) => {
-         feedbacks.forEach((feedback) => {
-            createContent(feedback)
-            loadMoreBtn.innerText = "Load More"
-         });
-      });
-   });
+    loadMoreBtn.innerText = "Loading..."
+    skip += loadAmount;
+    fetch(
+        `https://ideas-api.inceptioncloud.net/feedback`
+        + `?limit=${loadAmount}`
+        + `&skip=${skip}`
+        + `&order=${order}`
+        + `&language=${language}`
+        + `&type=${type}`
+    ).then((response) => {
+        response.json().then((feedbacks) => {
+            feedbacks.forEach((feedback) => {
+                createContent(feedback)
+                loadMoreBtn.innerText = "Load More"
+            });
+        });
+    });
 });
 
 window.addEventListener("load", () => {
-   setTimeout(function () {
-      // updating values after the browser cache has been applied to the selections
-      order = orderSelection.options[orderSelection.selectedIndex].value === "latest" ? -1 : 1;
-      language = languageSelection.options[languageSelection.selectedIndex].value;
-      listFeedback();
-   }, 0);
+    setTimeout(function () {
+        // updating values after the browser cache has been applied to the selections
+        order = orderSelection.options[orderSelection.selectedIndex].value === "latest" ? -1 : 1;
+        language = languageSelection.options[languageSelection.selectedIndex].value;
+        listFeedback();
+    }, 0);
 });
 
 orderSelection.addEventListener("change", () => {
-   order = orderSelection.options[orderSelection.selectedIndex].value === "latest" ? -1 : 1;
-   reloadAll();
+    order = orderSelection.options[orderSelection.selectedIndex].value === "latest" ? -1 : 1;
+    reloadAll();
 });
 
 languageSelection.addEventListener("change", () => {
-   language = languageSelection.options[languageSelection.selectedIndex].value;
-   reloadAll();
+    language = languageSelection.options[languageSelection.selectedIndex].value;
+    reloadAll();
 });
 
 typeSelection.addEventListener("change", () => {
-   type = typeSelection.options[typeSelection.selectedIndex].value;
-   reloadAll();
+    type = typeSelection.options[typeSelection.selectedIndex].value;
+    reloadAll();
 });
 
 function listFeedback() {
-   console.log("Loading feedback list from backend...");
-   fetch(
-      `https://ideas-api.inceptioncloud.net/feedback`
-      + `?limit=${loadAmount}`
-      + `&skip=0`
-      + `&order=${order}`
-      + `&language=${language}`
-      + `&type=${type}`
-   )
-      .then((response) => response.json())
-      .then((feedbacks) => {
-         feedbackCont.innerText = "";
-         loadMoreBtn.style.display = 'block'
-         // document.getElementById('total').innerText = `All: ${feedbacks[0].total}`
-         feedbacks.forEach((feedback) => createContent(feedback));
-      });
+    console.log("Loading feedback list from backend...");
+    const header = localStorage.getItem("dragonfly-token")
+    // fetch(
+    //    `https://ideas-api.inceptioncloud.net/feedback`
+    //    + `?limit=${loadAmount}`
+    //    + `&skip=0`
+    //    + `&order=${order}`
+    //    + `&language=${language}`
+    //    + `&type=${type}`
+    // )
+    //    .then((response) => response.json())
+    //    .then((feedbacks) => {
+    //       feedbackCont.innerText = "";
+    //       loadMoreBtn.style.display = 'block'
+    //       // document.getElementById('total').innerText = `All: ${feedbacks[0].total}`
+    //       feedbacks.forEach((feedback) => createContent(feedback));
+    //    });
+
+    fetch(
+        `http://localhost:3000/feedback`
+        + `?limit=${loadAmount}`
+        + `&skip=0`
+        + `&order=${order}`
+        + `&language=${language}`
+        + `&type=${type}`,
+    )
+        .then((response) => response.json())
+        .then((feedbacks) => {
+            feedbackCont.innerText = "";
+            loadMoreBtn.style.display = 'block'
+            feedbacks.forEach((feedback) => createContent(feedback));
+        });
 }
 
 function reloadAll() {
-   console.log("Reloading all entries...");
-   // const loadingInfo = document.createElement('div')
-   // loadingInfo.textContent = 'Reloading all entries...'
-   // feedbackCont.insertBefore(loadingInfo, feedbackCont.firstChild);
-   fetch(
-      `https://ideas-api.inceptioncloud.net/feedback`
-      + `?limit=${loadAmount + skip}`
-      + `&skip=0`
-      + `&order=${order}`
-      + `&language=${language}`
-      + `&type=${type}`
-   )
-      .then((response) => response.json())
-      .then((feedbacks) => {
-         // document.getElementById('total').innerText = `All: ${feedbacks[0].total}`
-         if (feedbacks.length > 0 && feedbacks[0].end !== true) {
-            feedbackCont.innerText = ""
-            feedbacks.forEach((feedback) => {
-               createContent(feedback);
-            });
-         } else {
-            feedbackCont.innerText = "No items apply to the given filters!"
-         }
-      });
+    console.log("Reloading all entries...");
+    // const loadingInfo = document.createElement('div')
+    // loadingInfo.textContent = 'Reloading all entries...'
+    // feedbackCont.insertBefore(loadingInfo, feedbackCont.firstChild);
+    fetch(
+        `https://ideas-api.inceptioncloud.net/feedback`
+        + `?limit=${loadAmount + skip}`
+        + `&skip=0`
+        + `&order=${order}`
+        + `&language=${language}`
+        + `&type=${type}`
+    )
+        .then((response) => response.json())
+        .then((feedbacks) => {
+            // document.getElementById('total').innerText = `All: ${feedbacks[0].total}`
+            if (feedbacks.length > 0 && feedbacks[0].end !== true) {
+                feedbackCont.innerText = ""
+                feedbacks.forEach((feedback) => {
+                    createContent(feedback);
+                });
+            } else {
+                feedbackCont.innerText = "No items apply to the given filters!"
+            }
+        });
 }
 
 function escape(msg) {
-   return msg.replace("<", "&lt;").replace(">", "&gt;");
+    return msg.replace("<", "&lt;").replace(">", "&gt;");
 }
 
 function capitalizeFirstLetter(string) {
-   return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-function createElmt(html) {
-   var div = document.createElement("div");
-   div.innerHTML = escape(html);
-   return div.childNodes[0];
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function createContent(feedback) {
-   loadMoreBtn.disabled = feedback.end;
-   if (feedback.end) return;
+    loadMoreBtn.disabled = feedback.end;
+    if (feedback.end) return;
 
-   const div = document.createElement("div");
-   div.classList.add('fb')
+    const div = document.createElement("div");
+    div.classList.add('fb')
 
-   const details = document.createElement('div')
-   details.classList.add('details')
-   const flag = document.createElement('img')
-   flag.src = feedback.lang === 'en' ? 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAhFBMVEUAAADvjYbwfHSKYpnt7/GKYpp4hcrr7' +
-      '/HwkYnvq6WAd7Xvx8aHaqShaJDLsMOic5vykYzyj4r0Qzbs7/E/UbXvmJPybmTuxMJ7h8zBp77///+HktFvfMfb3/FLW7nz9Pu3vuNjccNsTZSrs99qeMSTndXn6fbP1O3O0+xrXKb' +
-      'Nrr9rbbgEiDpcAAAAEnRSTlMAcMDgfuDAgbCgzI7Y2J6UPDtbvABhAAAAz0lEQVRIx+2TSxKCMBBEBQEB/zBgTEIUERS9//1UilUkMRW0KKy8Re/epqdnYjD8L+upiKUtwWpkF0ScI' +
-      'gn2V2QCwAelSnKYZ4cjcFFWVQn3nYR5I3uQYQRcMIwZnGMJTisjRIELRoiiLEBFdqGzMVYqtn3BV8YFfdamJhe44KKpTUFevI5K3oKgvE4l+P0L8wQLU5NFC1ORQ+HC6kRC0LYtWFi' +
-      'vl/y5vNqLuH1+yVmshTOwbEda2APLfqqFP+ZTBYkWwZjvvLG02E4MBkMXD5MAkJrGRHOLAAAAAElFTkSuQmCC'
-      : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAALVBMVEUAAABTV1z/mAVEWWT/wAf/PABEWmT/wQZlVFH/nARFWmL/wgX/PQBFWmT/wQ' +
-      'cERp1ZAAAADHRSTlMAz8+/v4CAgHR0YGBk1e17AAAARklEQVQ4y2MYBbQAi41xAiugdO5dnODaqDSZ0o2COIEEUDrmDE5wdFSaNtKTlHACTaB03Tuc4PmoNJnSW1xwAm+GUUADAAA0' +
-      'cjjQYLRUuAAAAABJRU5ErkJggg=='
+    const details = document.createElement('div')
+    details.classList.add('details')
+    const flag = document.createElement('img')
+    flag.src = feedback.lang === 'en' ? 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAhFBMVEUAAADvjYbwfHSKYpnt7/GKYpp4hcrr7' +
+        '/HwkYnvq6WAd7Xvx8aHaqShaJDLsMOic5vykYzyj4r0Qzbs7/E/UbXvmJPybmTuxMJ7h8zBp77///+HktFvfMfb3/FLW7nz9Pu3vuNjccNsTZSrs99qeMSTndXn6fbP1O3O0+xrXKb' +
+        'Nrr9rbbgEiDpcAAAAEnRSTlMAcMDgfuDAgbCgzI7Y2J6UPDtbvABhAAAAz0lEQVRIx+2TSxKCMBBEBQEB/zBgTEIUERS9//1UilUkMRW0KKy8Re/epqdnYjD8L+upiKUtwWpkF0ScI' +
+        'gn2V2QCwAelSnKYZ4cjcFFWVQn3nYR5I3uQYQRcMIwZnGMJTisjRIELRoiiLEBFdqGzMVYqtn3BV8YFfdamJhe44KKpTUFevI5K3oKgvE4l+P0L8wQLU5NFC1ORQ+HC6kRC0LYtWFi' +
+        'vl/y5vNqLuH1+yVmshTOwbEda2APLfqqFP+ZTBYkWwZjvvLG02E4MBkMXD5MAkJrGRHOLAAAAAElFTkSuQmCC'
+        : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAALVBMVEUAAABTV1z/mAVEWWT/wAf/PABEWmT/wQZlVFH/nARFWmL/wgX/PQBFWmT/wQ' +
+        'cERp1ZAAAADHRSTlMAz8+/v4CAgHR0YGBk1e17AAAARklEQVQ4y2MYBbQAi41xAiugdO5dnODaqDSZ0o2COIEEUDrmDE5wdFSaNtKTlHACTaB03Tuc4PmoNJnSW1xwAm+GUUADAAA0' +
+        'cjjQYLRUuAAAAABJRU5ErkJggg=='
 
-   const heading = document.createElement("h3");
+    const heading = document.createElement("h3");
 
-   const a = document.createElement("a");
-   a.href = `view.html?id=${feedback._id}`;
-   a.textContent = feedback.title;
+    const upvotes = document.createElement("a")
+    upvotes.textContent = feedback.upvotesAmount || "0"
 
-   const type = document.createElement("p");
-   type.textContent = capitalizeFirstLetter(feedback.type);
+    const a = document.createElement("a");
+    a.href = `view.html?id=${feedback._id}`;
+    a.textContent = feedback.title;
 
-   details.appendChild(heading);
-   details.appendChild(flag)
-   heading.appendChild(a);
-   div.appendChild(details)
-   div.appendChild(type);
+    const type = document.createElement("p");
+    type.textContent = capitalizeFirstLetter(feedback.type);
 
-   feedbackCont.appendChild(div);
+    details.appendChild(heading);
+    details.appendChild(flag)
+    heading.appendChild(upvotes);
+    heading.appendChild(a);
+    div.appendChild(details)
+    div.appendChild(type);
+
+    feedbackCont.appendChild(div);
 }
