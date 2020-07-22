@@ -1,3 +1,5 @@
+const IDEAS_API_HOST = "http://localhost:3000"
+
 const feedbackCont = document.querySelector(".feedbacks");
 const loadMoreBtn = document.getElementById("load");
 const orderSelection = document.getElementById("order");
@@ -19,11 +21,23 @@ let upvotesOrder = "0"
 feedbackCont.innerText = "Loading...";
 loadMoreBtn.style.display = 'none'
 
+window.onunload = function () { };
+window.onload = () => {
+    setTimeout(function () {
+        // updating values after the browser cache has been applied to the selections
+        order = orderSelection.options[orderSelection.selectedIndex].value === "latest" ? -1 : 1;
+        language = languageSelection.options[languageSelection.selectedIndex].value;
+        type = typeSelection.options[typeSelection.selectedIndex].value;
+        upvotesOrder = upvotesOrderSelection.options[upvotesOrderSelection.selectedIndex].value;
+        listFeedback();
+    }, 0);
+}
+
 loadMoreBtn.addEventListener("click", function () {
     loadMoreBtn.innerText = "Loading..."
     skip += loadAmount;
     fetch(
-        `http://localhost:3000/feedback`
+        `${IDEAS_API_HOST}/feedback`
         + `?limit=${loadAmount}`
         + `&skip=${skip}`
         + `&order=${order}`
@@ -41,17 +55,6 @@ loadMoreBtn.addEventListener("click", function () {
             upvoteHint()
         });
     });
-});
-
-setTimeout(function () {
-    // updating values after the browser cache has been applied to the selections
-    order = orderSelection.options[orderSelection.selectedIndex].value === "latest" ? -1 : 1;
-    language = languageSelection.options[languageSelection.selectedIndex].value;
-    type = typeSelection.options[typeSelection.selectedIndex].value;
-    upvotesOrder = upvotesOrderSelection.options[upvotesOrderSelection.selectedIndex].value;
-    listFeedback();
-}, 200);
-window.addEventListener("load", () => {
 });
 
 orderSelection.addEventListener("change", () => {
@@ -77,7 +80,7 @@ upvotesOrderSelection.addEventListener("change", () => {
 function listFeedback() {
     console.log("Loading feedback list from backend...");
     fetch(
-        `http://localhost:3000/feedback`
+        `${IDEAS_API_HOST}/feedback`
         + `?limit=${loadAmount}`
         + `&skip=0`
         + `&order=${order}`
@@ -99,7 +102,7 @@ function listFeedback() {
 function reloadAll() {
     console.log("Reloading all entries...");
     fetch(
-        `http://localhost:3000/feedback`
+        `${IDEAS_API_HOST}/feedback`
         + `?limit=${loadAmount + skip}`
         + `&skip=0`
         + `&order=${order}`

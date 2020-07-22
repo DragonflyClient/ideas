@@ -1,3 +1,5 @@
+const IDEAS_API_HOST = "http://localhost:3000"
+
 const feedbackId = new URL(window.location.href).searchParams.get("id");
 const cont = document.querySelector(".container");
 const authenticated = localStorage.getItem("dragonfly-token") !== null
@@ -10,7 +12,7 @@ if (authenticated) {
     }
 }
 
-fetch(`http://localhost:3000/id?id=${feedbackId}`, {  // TODO: Change
+fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {  // TODO: Change
     headers: headers
 })
     .then((response) => response.json())
@@ -133,7 +135,7 @@ function getTokenHeader() {
 
 function upvote() {
     fetch(
-        "http://localhost:3000/auth/upvote?id=" + feedbackId,
+        `${IDEAS_API_HOST}/auth/upvote?id=${feedbackId}`,
         {
             headers: {
                 "Authorization": getTokenHeader()

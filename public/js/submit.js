@@ -1,3 +1,5 @@
+const IDEAS_API_HOST = "http://localhost:3000"
+
 const form = document.querySelector('#suggestion-form')
 const feedbackSelect = document.getElementById('feedback')
 const languageSelect = document.getElementById('language')
@@ -54,7 +56,7 @@ form.addEventListener('submit', async function (event) {
       feedback.attachments = attachments
    }
 
-   fetch('http://localhost:3000', {
+   fetch(`${IDEAS_API_HOST}`, {
       method: 'POST', // or 'PUT'
       headers: {
          'Content-Type': 'application/json',

@@ -1,3 +1,5 @@
+const DRAGONFLY_BACKEND_HOST = "http://localhost:1414"
+
 const express = require("express");
 const cors = require("cors");
 const monk = require("monk");
@@ -227,12 +229,12 @@ app.post("/", (req, res) => {
 });
 
 app.listen(3000, () => {
-   console.log("Listening on http://localhost:3000");
+   console.log("Listening on port 3000");
 });
 
 function validateToken(header) {
    const options = {
-      url: 'https://api.inceptioncloud.net/auth',
+      url: `${DRAGONFLY_BACKEND_HOST}/auth`,
       method: 'POST',
       headers: {
          'Authorization': header
