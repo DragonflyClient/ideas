@@ -49,6 +49,120 @@
     overflow: auto;
 }
 
+#submit-btn {
+    margin-top: 20px;
+}
+
+/* loader */
+.lds-roller {
+    display: inline-block;
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.lds-roller div {
+    animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    transform-origin: 40px 40px;
+}
+
+.lds-roller div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #333333;
+    margin: -4px 0 0 -4px;
+}
+
+.lds-roller div:nth-child(1) {
+    animation-delay: -0.036s;
+}
+
+.lds-roller div:nth-child(1):after {
+    top: 63px;
+    left: 63px;
+}
+
+.lds-roller div:nth-child(2) {
+    animation-delay: -0.072s;
+}
+
+.lds-roller div:nth-child(2):after {
+    top: 68px;
+    left: 56px;
+}
+
+.lds-roller div:nth-child(3) {
+    animation-delay: -0.108s;
+}
+
+.lds-roller div:nth-child(3):after {
+    top: 71px;
+    left: 48px;
+}
+
+.lds-roller div:nth-child(4) {
+    animation-delay: -0.144s;
+}
+
+.lds-roller div:nth-child(4):after {
+    top: 72px;
+    left: 40px;
+}
+
+.lds-roller div:nth-child(5) {
+    animation-delay: -0.18s;
+}
+
+.lds-roller div:nth-child(5):after {
+    top: 71px;
+    left: 32px;
+}
+
+.lds-roller div:nth-child(6) {
+    animation-delay: -0.216s;
+}
+
+.lds-roller div:nth-child(6):after {
+    top: 68px;
+    left: 24px;
+}
+
+.lds-roller div:nth-child(7) {
+    animation-delay: -0.252s;
+}
+
+.lds-roller div:nth-child(7):after {
+    top: 63px;
+    left: 17px;
+}
+
+.lds-roller div:nth-child(8) {
+    animation-delay: -0.288s;
+}
+
+.lds-roller div:nth-child(8):after {
+    top: 56px;
+    left: 12px;
+}
+
+@keyframes lds-roller {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* FB list */
 
 .feedbacks {
@@ -71,12 +185,38 @@
     margin: 9px 20px 0 0;
     height: 100%;
     color: #333333 !important;
+    position: relative;
+    user-select: none;
 }
 
 .upvotes svg {
     margin-right: 8px;
     font-size: 18px;
     opacity: .8;
+}
+
+.upvotes::before {
+    content: 'Please review the feedback first before upvoting it.';
+    color: white;
+    width: 100%;
+    width: 430px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.76);
+    padding: 5px 0;
+    position: absolute;
+    overflow: visible;
+    top: -10px;
+    left: -100%;
+    font-size: 18px;
+    opacity: 0;
+    visibility: hidden;
+    transition: .2s ease;
+}
+
+.upvotes.clicked::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-30px);
 }
 
 .details.overview img {

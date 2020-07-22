@@ -4,6 +4,7 @@ const orderSelection = document.getElementById("order");
 const languageSelection = document.getElementById("lang");
 const typeSelection = document.getElementById("type");
 const upvotesOrderSelection = document.getElementById("upvotes-order");
+const upvotesElement = document.getElementsByClassName('upvotes')
 
 const authenticated = localStorage.getItem("dragonfly-token") !== null
 const headers = authenticated ? { 'Authorization': 'Bearer ' + localStorage.getItem("dragonfly-token") } : {}
@@ -36,6 +37,8 @@ loadMoreBtn.addEventListener("click", function () {
                 createContent(feedback)
                 loadMoreBtn.innerText = "Load More"
             });
+
+            upvoteHint()
         });
     });
 });
@@ -45,6 +48,8 @@ window.addEventListener("load", () => {
         // updating values after the browser cache has been applied to the selections
         order = orderSelection.options[orderSelection.selectedIndex].value === "latest" ? -1 : 1;
         language = languageSelection.options[languageSelection.selectedIndex].value;
+        type = typeSelection.options[typeSelection.selectedIndex].value;
+        upvotesOrder = upvotesOrderSelection.options[upvotesOrderSelection.selectedIndex].value;
         listFeedback();
     }, 0);
 });
@@ -86,6 +91,8 @@ function listFeedback() {
             feedbackCont.innerText = "";
             loadMoreBtn.style.display = 'block'
             feedbacks.forEach((feedback) => createContent(feedback));
+
+            upvoteHint()
         });
 }
 
@@ -103,16 +110,31 @@ function reloadAll() {
     )
         .then((response) => response.json())
         .then((feedbacks) => {
+
             // document.getElementById('total').innerText = `All: ${feedbacks[0].total}`
             if (feedbacks.length > 0 && feedbacks[0].end !== true) {
                 feedbackCont.innerText = ""
                 feedbacks.forEach((feedback) => {
                     createContent(feedback);
                 });
+                upvoteHint()
             } else {
                 feedbackCont.innerText = "No items apply to the given filters!"
             }
         });
+}
+
+function upvoteHint() {
+    Array.from(upvotesElement).forEach(function (element) {
+        element.addEventListener('click', () => {
+            if (!element.classList.contains('upvoted')) {
+                element.classList.add('clicked')
+                setTimeout(() => {
+                    element.classList.remove('clicked')
+                }, 1300)
+            }
+        });
+    });
 }
 
 function escape(msg) {
@@ -148,9 +170,10 @@ function createContent(feedback) {
     heading.classList.add('title-cont')
 
     const upvotes = document.createElement("a")
-    console.log(upvoted)
-    if (upvoted)
+    if (upvoted) {
         upvotes.style.setProperty("color", "green", "important");
+        upvotes.classList.add('upvoted')
+    }
 
     upvotes.classList.add('upvotes')
     upvotes.textContent = feedback.upvotesAmount || "0"

@@ -70,8 +70,6 @@ app.get("/feedback", async function (req, res) {
    }
    sortQuery.createdMs = order
 
-   console.log("sort query", sortQuery)
-
    feedbacks.count(query, function (error, count) {
       feedbacks
          .find(query, {

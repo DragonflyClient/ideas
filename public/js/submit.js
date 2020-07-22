@@ -5,6 +5,7 @@ const container = document.querySelector('.container')
 const warningCont = document.getElementById('warning')
 const submitBtn = document.getElementById('submit-btn')
 const attachmentsInput = document.getElementById("attachments")
+const loader = document.getElementById('loader')
 
 // submit suggestion
 form.addEventListener('submit', async function (event) {
@@ -17,6 +18,9 @@ form.addEventListener('submit', async function (event) {
    const type = feedbackSelect.options[feedbackSelect.selectedIndex].value
    const lang = languageSelect.options[languageSelect.selectedIndex].value
    const attachments = []
+
+   container.style.display = 'none'
+   loader.style.display = 'block'
 
    for (let file of attachmentsInput.files) {
       let link = await upload(file)
@@ -57,6 +61,7 @@ form.addEventListener('submit', async function (event) {
       },
       body: JSON.stringify(feedback),
    }).then(response => {
+
       if (response.ok) {
          response.json()
             .then(feedback => {
@@ -100,6 +105,9 @@ form.addEventListener('submit', async function (event) {
       }
    })
    event.preventDefault()
+
+   container.style.display = 'block'
+   loader.style.display = 'none'
 })
 
 function upload(input) {
