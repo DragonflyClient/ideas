@@ -135,14 +135,13 @@ function getTokenHeader() {
 
 function upvote() {
     fetch(
-        `${IDEAS_API_HOST}/auth/upvote?id=${feedbackId}`,
+        `${IDEAS_API_HOST}/upvote?id=${feedbackId}`,
         {
             headers: {
                 "Authorization": getTokenHeader()
             }
         }
-    )
-        .then(result => result.json())
+    ).then(result => result.json())
         .then(result => {
             console.log(result)
             if (result.success) {

@@ -56,7 +56,7 @@ form.addEventListener('submit', async function (event) {
       feedback.attachments = attachments
    }
 
-   fetch(`${IDEAS_API_HOST}`, {
+   fetch(`${IDEAS_API_HOST}/submit`, {
       method: 'POST', // or 'PUT'
       headers: {
          'Content-Type': 'application/json',

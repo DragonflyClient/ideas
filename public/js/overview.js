@@ -37,7 +37,7 @@ loadMoreBtn.addEventListener("click", function () {
     loadMoreBtn.innerText = "Loading..."
     skip += loadAmount;
     fetch(
-        `${IDEAS_API_HOST}/feedback`
+        `${IDEAS_API_HOST}/overview`
         + `?limit=${loadAmount}`
         + `&skip=${skip}`
         + `&order=${order}`
@@ -80,7 +80,7 @@ upvotesOrderSelection.addEventListener("change", () => {
 function listFeedback() {
     console.log("Loading feedback list from backend...");
     fetch(
-        `${IDEAS_API_HOST}/feedback`
+        `${IDEAS_API_HOST}/overview`
         + `?limit=${loadAmount}`
         + `&skip=0`
         + `&order=${order}`
@@ -102,7 +102,7 @@ function listFeedback() {
 function reloadAll() {
     console.log("Reloading all entries...");
     fetch(
-        `${IDEAS_API_HOST}/feedback`
+        `${IDEAS_API_HOST}/overview`
         + `?limit=${loadAmount + skip}`
         + `&skip=0`
         + `&order=${order}`
