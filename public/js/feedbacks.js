@@ -43,15 +43,15 @@ loadMoreBtn.addEventListener("click", function () {
     });
 });
 
+setTimeout(function () {
+    // updating values after the browser cache has been applied to the selections
+    order = orderSelection.options[orderSelection.selectedIndex].value === "latest" ? -1 : 1;
+    language = languageSelection.options[languageSelection.selectedIndex].value;
+    type = typeSelection.options[typeSelection.selectedIndex].value;
+    upvotesOrder = upvotesOrderSelection.options[upvotesOrderSelection.selectedIndex].value;
+    listFeedback();
+}, 200);
 window.addEventListener("load", () => {
-    setTimeout(function () {
-        // updating values after the browser cache has been applied to the selections
-        order = orderSelection.options[orderSelection.selectedIndex].value === "latest" ? -1 : 1;
-        language = languageSelection.options[languageSelection.selectedIndex].value;
-        type = typeSelection.options[typeSelection.selectedIndex].value;
-        upvotesOrder = upvotesOrderSelection.options[upvotesOrderSelection.selectedIndex].value;
-        listFeedback();
-    }, 0);
 });
 
 orderSelection.addEventListener("change", () => {
