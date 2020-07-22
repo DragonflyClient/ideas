@@ -1,4 +1,4 @@
-const IDEAS_API_HOST = "http://localhost:3000"
+const IDEAS_API_HOST = "https://ideas-api.inceptioncloud.net"
 
 const form = document.querySelector('#suggestion-form')
 const feedbackSelect = document.getElementById('feedback')
