@@ -173,7 +173,6 @@ function createContent(feedback) {
     heading.classList.add('title-cont')
 
     const upvotes = document.createElement("a")
-    console.log(upvoted)
     if (upvoted) {
         upvotes.classList.add('upvoted')
     }

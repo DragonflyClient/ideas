@@ -1,4 +1,4 @@
-const IDEAS_API_HOST = "http://localhost:3000"
+const IDEAS_API_HOST = "https://ideas-api.inceptioncloud.net"
 
 const feedbackId = new URL(window.location.href).searchParams.get("id");
 const cont = document.querySelector(".container");
@@ -17,7 +17,6 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {  // TODO: Change
 })
     .then((response) => response.json())
     .then((response) => {
-        console.log(response)
         if (response.status) {
             // Id not found
             document.title = "Not found"
@@ -160,7 +159,6 @@ function upvote() {
                 result.added ? upvoteButton.classList.add('upvoted') : upvoteButton.classList.remove('upvoted')
             } else {
                 const error = result.error // <- error message
-                console.log(result)
                 setTimeout(function () {
                     Swal.fire({
                         title: `Error!`,
