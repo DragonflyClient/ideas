@@ -173,8 +173,8 @@ function createContent(feedback) {
     heading.classList.add('title-cont')
 
     const upvotes = document.createElement("a")
+    console.log(upvoted)
     if (upvoted) {
-        upvotes.style.setProperty("color", "green", "important");
         upvotes.classList.add('upvoted')
     }
 

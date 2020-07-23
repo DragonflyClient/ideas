@@ -1,4 +1,4 @@
-const IDEAS_API_HOST = "https://ideas-api.inceptioncloud.net"
+const IDEAS_API_HOST = "http://localhost:3000"
 
 const feedbackId = new URL(window.location.href).searchParams.get("id");
 const cont = document.querySelector(".container");
@@ -40,15 +40,24 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {  // TODO: Change
             // display id page
             document.title = escape(`${response.title} | ${capitalizeFirstLetter(response.type)}`);
 
+            const item = document.createElement('div')
+            item.classList.add('item')
+
+            const itemInfo = document.createElement('div')
+            itemInfo.classList.add('item-info')
+
             const details = document.createElement('div')
             details.classList.add('details', 'view')
 
-            const upvoteButton = document.createElement("input")
+            const upvoteButton = document.createElement("a")
             upvoteButton.id = "upvotes"
-            upvoteButton.type = "submit"
-            upvoteButton.value = response.upvotesAmount || 0
+            upvoteButton.classList.add('upvotes')
+            upvoteButton.textContent = response.upvotesAmount || "0"
+            upvoteButton.innerHTML += '<i class="fas fa-thumbs-up"></i>'
+
             if (response.upvoted)
-                upvoteButton.style.backgroundColor = 'green'
+                upvoteButton.classList.add('upvoted')
+
             upvoteButton.setAttribute("dragonfly-feedback-id", feedbackId)
             upvoteButton.addEventListener("click", (e) => {
                 e.preventDefault()
@@ -103,15 +112,17 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {  // TODO: Change
             const hrTop = document.createElement('hr')
             const hrBot = document.createElement('hr')
 
-            details.appendChild(upvoteButton);
+            itemInfo.appendChild(upvoteButton);
             details.appendChild(h2);
             details.appendChild(lang)
-            cont.appendChild(details)
-            cont.appendChild(date);
-            cont.appendChild(hrTop)
-            cont.appendChild(message);
-            cont.appendChild(hrBot)
-            cont.appendChild(attachments)
+            details.appendChild(date);
+            itemInfo.appendChild(details)
+            item.appendChild(itemInfo)
+            item.appendChild(hrTop)
+            item.appendChild(message);
+            item.appendChild(hrBot)
+            item.appendChild(attachments)
+            cont.appendChild(item)
         }
     });
 
@@ -143,12 +154,21 @@ function upvote() {
         }
     ).then(result => result.json())
         .then(result => {
-            console.log(result)
+            const upvoteButton = document.getElementById("upvotes")
             if (result.success) {
-                document.getElementById("upvotes").value = result.upvotesAmount
+                upvoteButton.innerHTML = `${result.upvotesAmount}<i class="fas fa-thumbs-up"></i>`
+                result.added ? upvoteButton.classList.add('upvoted') : upvoteButton.classList.remove('upvoted')
             } else {
                 const error = result.error // <- error message
-                // handle upvote fail
+                console.log(result)
+                setTimeout(function () {
+                    Swal.fire({
+                        title: `Error!`,
+                        text: `${result.status} ${result.msg}`,
+                        icon: 'error',
+                        confirmButtonText: 'Got it'
+                    })
+                }, 50)
             }
         })
 }

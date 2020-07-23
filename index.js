@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const app = express();
 const rateLimit = require("express-rate-limit");
 const credentials = require("./creds");
-const {ObjectId} = require("mongodb");
+const { ObjectId } = require("mongodb");
 const db = monk(`mongodb://${credentials.db.username}:${credentials.db.password}@45.85.219.34:27017/dragonfly`);
 const ideas = db.get("ideas");
 const request = require('request');
@@ -35,7 +35,7 @@ Array.prototype.contains = function (obj) {
 db.then(() => console.log("Connected to the database"));
 
 app.use(cors());
-app.use(bodyParser({limit: '500kb'}));
+app.use(bodyParser({ limit: '500kb' }));
 
 app.use(express.json());
 
@@ -85,7 +85,7 @@ app.get("/overview", async function (req, res) {
             })
 
             if (count <= parseInt(skip) + parseInt(limit)) {
-                result.push({end: true})
+                result.push({ end: true })
             }
 
             res.json(result);
@@ -155,7 +155,7 @@ app.get("/upvote", (req, res) => {
                     added = true
                 }
 
-                ideas.update({_id: id}, {
+                ideas.update({ _id: id }, {
                     $set: {
                         upvotes: upvotes,
                         upvotesAmount: upvotes.length
@@ -250,7 +250,7 @@ function validateToken(header) {
 function getEntriesById(id, callback, error) {
     const validId = ObjectId.isValid(id);
     if (validId) {
-        ideas.find({_id: id}).then((found) => callback(found))
+        ideas.find({ _id: id }).then((found) => callback(found))
     } else {
         error()
     }
