@@ -238,10 +238,8 @@ function validateToken(token) {
 
     return new Promise(function (resolve) {
         request(options, function (error, response, body) {
-            console.log(response.statusCode)
             if (response.statusCode === 200) {
                 const result = JSON.parse(body)
-                console.log("result", result)
                 if (result.success) {
                     resolve(result)
                     return
