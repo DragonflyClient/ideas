@@ -9,47 +9,22 @@
    </body>
 
    <script>
-      const button = document.getElementById("button")
+       const button = document.getElementById("button")
 
-      button.addEventListener('click', event => {
-         event.preventDefault()
-         const token = localStorage.getItem('dragonfly-token')
-         console.log("token = ", token)
+       button.addEventListener('click', event => {
+           event.preventDefault()
+           fetch('https://api.inceptioncloud.net/cookie/auth', {
+               method: 'POST',
+               credentials: "include"
+           }).then(result => {
+               console.log(result)
+               return result.json()
+           }).then(result => console.log(result))
+       });
 
-         const headers = {
-            'Authorization': 'Bearer ' + token.toString()
-         }
-
-         console.log("headers = ", headers)
-
-         fetch('http://localhost:1414/auth', {
-            method: 'POST',
-            headers: headers
-         }).then(result => {
-            if (result.status === 200) {
-               result.json().then(result => {
-                  if (result.success) {
-                     console.log("Success")
-                     const identifier = result.identifier
-                     const username = result.username
-                     const creationDate = result.creationDate
-                     const permissionLevel = result.permissionLevel
-
-                     console.log(identifier, username, creationDate, permissionLevel)
-                     // handle login success
-                  } else {
-                     authError(result.error)
-                  }
-               })
-            } else {
-               authError(result.status)
-            }
-         })
-      });
-
-      function authError(error) {
-         console.log("Error: ", error)
-         // handle authentication error
-      }
+       function authError(error) {
+           console.log("Error: ", error)
+           // handle authentication error
+       }
    </script>
 </html>

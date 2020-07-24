@@ -1,19 +1,10 @@
-const IDEAS_API_HOST = "https://ideas-api.inceptioncloud.net"
+const IDEAS_API_HOST = "http://localhost:3000"
 
 const feedbackId = new URL(window.location.href).searchParams.get("id");
 const cont = document.querySelector(".container");
-const authenticated = localStorage.getItem("dragonfly-token") !== null
 
-let headers = {}
-
-if (authenticated) {
-    headers = {
-        "Authorization": getTokenHeader()
-    }
-}
-
-fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {  // TODO: Change
-    headers: headers
+fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
+    credentials: "include"
 })
     .then((response) => response.json())
     .then((response) => {
@@ -60,11 +51,7 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {  // TODO: Change
             upvoteButton.setAttribute("dragonfly-feedback-id", feedbackId)
             upvoteButton.addEventListener("click", (e) => {
                 e.preventDefault()
-                if (authenticated) {
-                    upvote()
-                } else {
-                    window.location.href = "auth/--login.html"; // TODO: Change
-                }
+                upvote()
             })
 
             const h2 = document.createElement("h2");
@@ -134,31 +121,34 @@ function capitalizeFirstLetter(string) {
 }
 
 function createElmt(html) {
-    var div = document.createElement("div");
+    const div = document.createElement("div");
     div.innerHTML = escape(html);
     return div.childNodes[0];
-}
-
-function getTokenHeader() {
-    return "Bearer " + localStorage.getItem("dragonfly-token");
 }
 
 function upvote() {
     fetch(
         `${IDEAS_API_HOST}/upvote?id=${feedbackId}`,
         {
-            headers: {
-                "Authorization": getTokenHeader()
-            }
+            credentials: "include"
         }
     ).then(result => result.json())
         .then(result => {
+            console.log(result)
             const upvoteButton = document.getElementById("upvotes")
             if (result.success) {
                 upvoteButton.innerHTML = `${result.upvotesAmount}<i class="fas fa-thumbs-up"></i>`
                 result.added ? upvoteButton.classList.add('upvoted') : upvoteButton.classList.remove('upvoted')
+            } else if (!result.success) {
+                setTimeout(function () {
+                    Swal.fire({
+                        title: `Error!`,
+                        text: `${result.error}`,
+                        icon: 'error',
+                        confirmButtonText: 'Got it'
+                    })
+                }, 50)
             } else {
-                const error = result.error // <- error message
                 setTimeout(function () {
                     Swal.fire({
                         title: `Error!`,

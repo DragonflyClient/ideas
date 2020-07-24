@@ -11,6 +11,7 @@ const { ObjectId } = require("mongodb");
 const db = monk(`mongodb://${credentials.db.username}:${credentials.db.password}@45.85.219.34:27017/dragonfly`);
 const ideas = db.get("ideas");
 const request = require('request');
+const cookieParser = require('cookie-parser')
 
 Array.prototype.remove = function () {
     let what, a = arguments, L = a.length, ax;
@@ -34,10 +35,13 @@ Array.prototype.contains = function (obj) {
 
 db.then(() => console.log("Connected to the database"));
 
-app.use(cors());
+app.use(cors({
+    origin: ['https://inceptioncloud.net', 'null'],
+    credentials: true
+}));
 app.use(bodyParser({ limit: '500kb' }));
-
 app.use(express.json());
+app.use(cookieParser())
 
 app.get("/", (req, res) => {
     res.redirect("https://inceptioncloud.net/dragonfly/ideas")
@@ -140,9 +144,9 @@ app.use(rateLimit({
 }));
 
 app.get("/upvote", (req, res) => {
-    const authorization = req.header("Authorization")
+    const token = req.cookies["dragonfly-token"]
     const id = req.query.id;
-    validateToken(authorization).then((account) => {
+    validateToken(token).then((account) => {
         if (account && id) {
             getEntriesById(id, (entry) => {
                 const upvotes = entry[0].upvotes || []
@@ -223,19 +227,21 @@ app.listen(3000, () => {
     console.log("Listening on port 3000");
 });
 
-function validateToken(header) {
+function validateToken(token) {
     const options = {
         url: `${DRAGONFLY_BACKEND_HOST}/auth`,
         method: 'POST',
         headers: {
-            'Authorization': header
+            'Authorization': 'Bearer ' + token
         }
     }
 
     return new Promise(function (resolve) {
         request(options, function (error, response, body) {
+            console.log(response.statusCode)
             if (response.statusCode === 200) {
                 const result = JSON.parse(body)
+                console.log("result", result)
                 if (result.success) {
                     resolve(result)
                     return

@@ -1,4 +1,4 @@
-const IDEAS_API_HOST = "https://ideas-api.inceptioncloud.net"
+const IDEAS_API_HOST = "http://localhost:3000"
 
 const feedbackCont = document.querySelector(".feedbacks");
 const loadMoreBtn = document.getElementById("load");
@@ -8,8 +8,6 @@ const typeSelection = document.getElementById("type");
 const upvotesOrderSelection = document.getElementById("upvotes-order");
 const upvotesElement = document.getElementsByClassName('upvotes')
 
-const authenticated = localStorage.getItem("dragonfly-token") !== null
-const headers = authenticated ? { 'Authorization': 'Bearer ' + localStorage.getItem("dragonfly-token") } : {}
 const loadAmount = 10;
 
 let order = -1
@@ -21,7 +19,7 @@ let upvotesOrder = "0"
 feedbackCont.innerText = "Loading...";
 loadMoreBtn.style.display = 'none'
 
-window.onunload = function () { };
+window.onunload = function () {};
 window.onload = () => {
     setTimeout(function () {
         // updating values after the browser cache has been applied to the selections
@@ -44,7 +42,9 @@ loadMoreBtn.addEventListener("click", function () {
         + `&language=${language}`
         + `&type=${type}`
         + `&upvotesorder=${upvotesOrder}`,
-        { headers: headers }
+        {
+            credentials: "include"
+        }
     ).then((response) => {
         response.json().then((feedbacks) => {
             feedbacks.forEach((feedback) => {
@@ -87,7 +87,9 @@ function listFeedback() {
         + `&language=${language}`
         + `&type=${type}`
         + `&upvotesorder=${upvotesOrder}`,
-        { headers: headers }
+        {
+            credentials: "include"
+        }
     )
         .then((response) => response.json())
         .then((feedbacks) => {
@@ -109,7 +111,9 @@ function reloadAll() {
         + `&language=${language}`
         + `&type=${type}`
         + `&upvotesorder=${upvotesOrder}`,
-        { headers: headers }
+        {
+            credentials: "include"
+        }
     )
         .then((response) => response.json())
         .then((feedbacks) => {
