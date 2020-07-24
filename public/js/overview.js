@@ -19,7 +19,7 @@ let upvotesOrder = "0"
 feedbackCont.innerText = "Loading...";
 loadMoreBtn.style.display = 'none'
 
-window.onunload = function () {};
+window.onunload = function () { };
 window.onload = () => {
     setTimeout(function () {
         // updating values after the browser cache has been applied to the selections
@@ -186,7 +186,7 @@ function createContent(feedback) {
     upvotes.innerHTML += '<i class="fas fa-thumbs-up"></i>'
 
     const a = document.createElement("a");
-    a.href = `view.html?id=${feedback._id}`;
+    a.href = `view?id=${feedback._id}`;
     a.textContent = feedback.title;
     a.classList.add('title')
 

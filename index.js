@@ -35,13 +35,13 @@ Array.prototype.contains = function (obj) {
 
 db.then(() => console.log("Connected to the database"));
 
+app.use(bodyParser({ limit: '500kb' }));
+app.use(express.json());
+app.use(cookieParser());
 app.use(cors({
     origin: ['https://inceptioncloud.net', 'null'],
     credentials: true
-}));
-app.use(bodyParser({ limit: '500kb' }));
-app.use(express.json());
-app.use(cookieParser())
+}))
 
 app.get("/", (req, res) => {
     res.redirect("https://inceptioncloud.net/dragonfly/ideas")
@@ -54,8 +54,8 @@ app.get("/overview", async function (req, res) {
     const language = req.query.language || "all";
     const type = req.query.type || "all"
     const upvotesOrder = parseInt(req.query.upvotesorder)
-    const authorization = req.header("Authorization")
-    const account = await validateToken(authorization)
+    const token = req.cookies["dragonfly-token"]
+    const account = await validateToken(token)
 
     const sortQuery = {}
     const query = {}
@@ -99,8 +99,8 @@ app.get("/overview", async function (req, res) {
 
 app.get("/id", async function (req, res) {
     const id = req.query.id;
-    const authorization = req.header("Authorization")
-    const account = await validateToken(authorization)
+    const token = req.cookies['dragonfly-token']
+    const account = await validateToken(token)
     getEntriesById(id,
         found => {
             if (found.length === 0) {
@@ -141,6 +141,9 @@ app.use(rateLimit({
         status: 429,
         msg: "Too many requests",
     },
+    keyGenerator: function (req, res) {
+        return req.headers['x-forwarded-for']
+    }
 }));
 
 app.get("/upvote", (req, res) => {

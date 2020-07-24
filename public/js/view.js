@@ -36,6 +36,7 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
             const itemInfo = document.createElement('div')
             itemInfo.classList.add('item-info')
 
+
             const details = document.createElement('div')
             details.classList.add('details', 'view')
 
@@ -45,8 +46,9 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
             upvoteButton.textContent = response.upvotesAmount || "0"
             upvoteButton.innerHTML += '<i class="fas fa-thumbs-up"></i>'
 
-            if (response.upvoted)
+            if (response.upvoted) {
                 upvoteButton.classList.add('upvoted')
+            }
 
             upvoteButton.setAttribute("dragonfly-feedback-id", feedbackId)
             upvoteButton.addEventListener("click", (e) => {
@@ -57,18 +59,25 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
             const h2 = document.createElement("h2");
             h2.appendChild(createElmt(response.title));
 
-            const lang = document.createElement('div')
-            lang.classList.add('lang')
+            const minecraftName = 'jwli'
 
-            const flag = document.createElement('img')
-            flag.src = response.lang === 'en' ? 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAhFBMVEUAAADvjYbwfHSKYpnt7/GKYpp4hcrr7' +
-                '/HwkYnvq6WAd7Xvx8aHaqShaJDLsMOic5vykYzyj4r0Qzbs7/E/UbXvmJPybmTuxMJ7h8zBp77///+HktFvfMfb3/FLW7nz9Pu3vuNjccNsTZSrs99qeMSTndXn6fbP1O3O0+xrXKb' +
-                'Nrr9rbbgEiDpcAAAAEnRSTlMAcMDgfuDAgbCgzI7Y2J6UPDtbvABhAAAAz0lEQVRIx+2TSxKCMBBEBQEB/zBgTEIUERS9//1UilUkMRW0KKy8Re/epqdnYjD8L+upiKUtwWpkF0ScI' +
-                'gn2V2QCwAelSnKYZ4cjcFFWVQn3nYR5I3uQYQRcMIwZnGMJTisjRIELRoiiLEBFdqGzMVYqtn3BV8YFfdamJhe44KKpTUFevI5K3oKgvE4l+P0L8wQLU5NFC1ORQ+HC6kRC0LYtWFi' +
-                'vl/y5vNqLuH1+yVmshTOwbEda2APLfqqFP+ZTBYkWwZjvvLG02E4MBkMXD5MAkJrGRHOLAAAAAElFTkSuQmCC'
-                : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAALVBMVEUAAABTV1z/mAVEWWT/wAf/PABEWmT/wQZlVFH/nARFWmL/wgX/PQBFWmT/wQ' +
-                'cERp1ZAAAADHRSTlMAz8+/v4CAgHR0YGBk1e17AAAARklEQVQ4y2MYBbQAi41xAiugdO5dnODaqDSZ0o2COIEEUDrmDE5wdFSaNtKTlHACTaB03Tuc4PmoNJnSW1xwAm+GUUADAAA0' +
-                'cjjQYLRUuAAAAABJRU5ErkJggg=='
+            const userInfo = document.createElement('div')
+            userInfo.classList.add('user-info')
+
+            const username = document.createElement('p')
+            username.textContent = minecraftName
+
+            const userHead = document.createElement('div')
+            userHead.classList.add('user-head')
+            userHead.textContent = 'by '
+
+            const minecraftHead = document.createElement('img')
+            minecraftHead.classList.add('user-head-img')
+            minecraftHead.src = `https://mc-heads.net/head/${minecraftName}`
+
+            userHead.appendChild(minecraftHead)
+            userInfo.appendChild(userHead)
+            userInfo.appendChild(username)
 
             const attachments = document.createElement("ul")
             if (response.attachments) {
@@ -85,8 +94,6 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
                 }
             }
 
-            lang.appendChild(flag)
-
             const message = document.createElement("p");
             message.classList.add('ql-editor', 'non-edit')
             message.innerHTML = response.message;
@@ -96,15 +103,16 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
             date.classList.add('created')
 
             const hrTop = document.createElement('hr')
+            const hrTop2 = document.createElement('hr')
             const hrBot = document.createElement('hr')
 
-            itemInfo.appendChild(upvoteButton);
             details.appendChild(h2);
-            details.appendChild(lang)
             details.appendChild(date);
             itemInfo.appendChild(details)
+            itemInfo.appendChild(upvoteButton)
             item.appendChild(itemInfo)
             item.appendChild(hrTop)
+            item.appendChild(userInfo)
             item.appendChild(message);
             item.appendChild(hrBot)
             item.appendChild(attachments)

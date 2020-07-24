@@ -6,10 +6,6 @@
 
 .details.view {
     padding: 0;
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    justify-items: start;
-    align-items: center;
     width: 100%;
 }
 
@@ -52,18 +48,19 @@
 
 .item .item-info {
     display: flex;
-    align-items: baseline;
+    align-items: center;
 }
 
 .created {
     color: rgb(143, 143, 143);
     padding: 0;
-    grid-area: 2/1;
+    margin: 0;
 }
 
 .ql-editor.non-edit {
     min-height: auto;
     height: auto;
+    padding: 0 !important;
 }
 
 .container p img {
@@ -76,12 +73,33 @@
     margin: 0 !important;
 }
 
-.lang {
+.upvotes {
     justify-self: end;
 }
 
 .details.view h2 {
     margin: 0;
+    font-size: 1.6rem;
+}
+
+.user-info .user-head {
+    display: inline-block;
+    color: rgb(143, 143, 143);
+}
+
+.user-info .user-head-img {
+    margin: 0 10px;
+    width: 30px;
+}
+
+.user-info {
+    margin-bottom: 20px;
+}
+
+.user-info p {
+    display: inline-block;
+    margin-bottom: 0;
+    font-size: 20px;
 }
 
 /* Submit */
@@ -252,7 +270,7 @@
 }
 
 .upvotes::before {
-    content: 'Please review the feedback first before upvoting it.';
+    content: 'Please review the post first before upvoting it.';
     color: white;
     width: 100%;
     width: 430px;
