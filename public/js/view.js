@@ -2,12 +2,19 @@ const IDEAS_API_HOST = "https://ideas-api.inceptioncloud.net"
 
 const feedbackId = new URL(window.location.href).searchParams.get("id");
 const cont = document.querySelector(".container");
+const footer = document.getElementById('footer')
+
+const loader = document.getElementById('loader')
+footer.style.display = 'none'
+loader.style.display = 'block'
 
 fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
     credentials: "include"
 })
     .then((response) => response.json())
     .then((response) => {
+        footer.style.display = 'block'
+        loader.style.display = 'none'
         if (response.status) {
             // Id not found
             document.title = "Not found"
@@ -80,6 +87,7 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
             userInfo.appendChild(username)
 
             const attachments = document.createElement("ul")
+            attachments.id = 'attachments'
             if (response.attachments) {
                 let index = 1
                 for (let link of response.attachments) {

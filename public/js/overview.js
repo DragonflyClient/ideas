@@ -8,7 +8,7 @@ const typeSelection = document.getElementById("type");
 const upvotesOrderSelection = document.getElementById("upvotes-order");
 const upvotesElement = document.getElementsByClassName('upvotes')
 
-const loadAmount = 10;
+const loadAmount = 15;
 
 let order = -1
 let skip = 0
@@ -153,6 +153,7 @@ function capitalizeFirstLetter(string) {
 }
 
 function createContent(feedback) {
+
     loadMoreBtn.disabled = feedback.end;
     if (feedback.end) return;
     const upvoted = feedback.upvoted || false
@@ -199,6 +200,5 @@ function createContent(feedback) {
     heading.appendChild(a);
     details.appendChild(type);
     div.appendChild(details)
-
     feedbackCont.appendChild(div);
 }

@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 
-   <head>
-      <meta charset="UTF-8">
-      <title>Login</title>
-   </head>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
 
-   <body>
-      <form id="form">
-         <label for="name">Username</label>
-         <input type="text" name="name" id="name">
-         <label for="password">Password</label>
-         <input type="password" name="password" id="password">
-         <input type="submit" value="Login">
-      </form>
-   </body>
+<body>
+    <form id="form">
+        <label for="name">Username</label>
+        <input type="text" name="name" id="name">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        <input type="submit" value="Login">
+    </form>
+    <div id="result">-/-</div>
+</body>
 
-   <script>
-       const form = document.getElementById("form")
+<script>
+    const form = document.getElementById("form")
 
-       form.addEventListener('submit', event => {
-           event.preventDefault()
-           const formData = new FormData(form)
-           const name = formData.get("name")
-           const password = formData.get("password")
-           const body = {
-               "name": name,
-               "password": password
-           }
+    form.addEventListener('submit', event => {
+        event.preventDefault()
+        const formData = new FormData(form)
+        const name = formData.get("name")
+        const password = formData.get("password")
+        const body = {
+            "name": name,
+            "password": password
+        }
 
-           fetch("https://api.inceptioncloud.net/cookie/login", {
-               method: "POST",
-               body: JSON.stringify(body),
-               headers: {
-                   "Content-Type": "application/json"
-               }
-           }).then(result => {
-               console.log(result)
-               return result.json();
-           }).then(result => {
-               console.log(result)
-           })
-       });
-   </script>
+        fetch("https://api.inceptioncloud.net/cookie/login", {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        }).then(result => {
+            console.log(result)
+            return result.json();
+        }).then(result => {
+            console.log(result)
+            document.getElementById("result").innerText = JSON.stringify(result)
+        })
+    });
+</script>
 
 </html>
