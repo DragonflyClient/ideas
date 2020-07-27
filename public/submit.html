@@ -41,7 +41,7 @@
               <option value="comment">Comment</option>
             </select>
             <small class="form-text text-muted">Please make sure not to repeat what has
-              <a href="./feedbacks.html">already been suggested</a>.</small>
+              <a href="../ideas">already been suggested</a>.</small>
           </div>
         </div>
         <div class="col-md-6">
@@ -63,13 +63,13 @@
       <div class="form-group" id="message1">
         <textarea class="form-control" name="message" id="message" style="resize: none;" rows="15"></textarea>
       </div>
-      <div class="custom-file my-4">
-        <input id="attachments" class="custom-file-input" type="file" accept="image/png, image/jpeg, image/gif"
-          multiple />
-        <label for="attachments" class="custom-file-label">Choose file</label>
-        <small id="attachmentsHelp" class="form-text text-muted">Please note that only images and log files can be
-          attached.</small>
+      <div class="custom-file mt-4 mb-2">
+        <input id="attachments" class="custom-file-input" type="file" accept="image/png, image/jpeg, image/gif" multiple
+          title="" />
+        <label id="attachmentsLabel" for="attachments" class="custom-file-label" title="">Upload attachments</label>
       </div>
+      <button id="clearAttachments" type="button" class="btn btn-dark">Clear attachments</button><br>
+      <small id="attachmentsHelp" class="form-text text-muted">Please note that only images can be attached.</small>
       <button type="submit" id="submit-btn" class="btn btn-primary">
         Submit
       </button>

@@ -6,7 +6,12 @@ const languageSelect = document.getElementById('language')
 const container = document.querySelector('.container')
 const warningCont = document.getElementById('warning')
 const submitBtn = document.getElementById('submit-btn')
+
 const attachmentsInput = document.getElementById("attachments")
+const attachmentsLabel = document.getElementById('attachmentsLabel')
+const clearAttachments = document.getElementById('clearAttachments')
+let selectedFiles = []
+
 const loader = document.getElementById('loader')
 
 // submit suggestion
@@ -24,7 +29,7 @@ form.addEventListener('submit', async function (event) {
    container.style.display = 'none'
    loader.style.display = 'block'
 
-   for (let file of attachmentsInput.files) {
+   for (let file of selectedFiles) {
       let link = await upload(file)
 
       if (link) {
@@ -64,10 +69,11 @@ form.addEventListener('submit', async function (event) {
       body: JSON.stringify(feedback),
    }).then(response => {
 
+      console.log(attachmentsInput.value)
       if (response.ok) {
          response.json()
             .then(feedback => {
-               warningCont.innerHTML = ''
+               clearAttachments.click()
                Swal.fire(
                   'Good job!',
                   `Your feedback with the title "${feedback.title.replace('<', '&lt;').replace('>', '&gt;')} was successfully sent!`,
@@ -110,6 +116,32 @@ form.addEventListener('submit', async function (event) {
 
    container.style.display = 'block'
    loader.style.display = 'none'
+})
+
+clearAttachments.addEventListener('click', (event) => {
+   event.preventDefault()
+   selectedFiles = []
+   attachmentsLabel.innerText = "Upload attachments"
+})
+
+attachmentsInput.addEventListener('change', (event) => {
+   const files = event.target.files
+   let names = ""
+
+   for (let file of files) {
+      selectedFiles.push(file);
+   }
+
+   for (let file of selectedFiles) {
+      names += file.name + ", "
+   }
+
+   if (names.length >= 2) {
+      names = names.substr(0, names.length - 2)
+      attachmentsLabel.innerText = names
+   } else {
+      attachmentsLabel.innerText = "Upload attachments"
+   }
 })
 
 function upload(input) {
