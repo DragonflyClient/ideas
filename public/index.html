@@ -8,8 +8,14 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
    <link rel="stylesheet" href="./css/style.css">
    <link rel="stylesheet" href="https://cdn.icnet.dev/web/drgn/css/header-styles-normal.css">
+   <link rel="icon" href="../assets/Dragon.svg" />
    <link rel="stylesheet" href="https://cdn.icnet.dev/web/drgn/components/css/footer.css">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
+   <!-- IONICONS -->
+   <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+   <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+   <link rel="stylesheet" href="https://cdn.icnet.dev/web/drgn/components/css/auth.css">
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
    <title>Feedback Overview</title>
 </head>
@@ -29,10 +35,10 @@
          </div>
          <div class="nav" id="nav" style="overflow: hidden">
             <ul>
+               <li class="item" onclick="closeMenu()"><a href="/dragonfly">Home</a></li>
                <li class="item" onclick="closeMenu()">
                   <a href="/dragonfly/releasenotes">Updates</a>
                </li>
-               <li class="item" onclick="closeMenu()"><a href="#faq">FAQ</a></li>
                <li class="item" onclick="closeMenu()">
                   <a href="/dragonfly/download">Download</a>
                </li>
@@ -43,17 +49,21 @@
                      <i class="fab fa-twitter"></i></a>
                   <a href="https://icnet.dev/discord">
                      <i class="fab fa-discord"></i></a>
-               </div>
             </ul>
          </div>
       </div>
       <div class="container1">
          <div class="overview intro">
-            <h2 class="mt-4">Feedback overview</h2>
+            <h2 class="mt-4">Feedback overview!!</h2>
             <p>
                Below you will find all bug reports, comments and suggestions about the Dragonfly modification and all
                related components. If you have a good idea, found a bug, or just have something to say, we
                would be happy if you write a post.</p>
+            <div id="username-info">
+               <p>Please note that you can only rate posts if you are <a href="#"
+                     onclick="document.getElementById('id01').style.display='block'">logged in.</a></p>
+            </div>
+
             <button type="button" id="submit-btn-note" class="btn btn-primary btn-sm"><a href="./submit">Submit
                   post</a></button>
          </div>
@@ -100,23 +110,25 @@
          </div>
       </div>
       <div id="footer"></div>
+      <div id="login"></div>
+      <div id="register"></div>
    </div>
 
    <script src="./js/overview.js"></script>
    <script src="https://inceptioncloud.net/dragonfly/ideas/js/main.js"></script>
-   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
    </script>
+   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
    </script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
    </script>
-   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
    <script>
       $("#footer").load('https://cdn.icnet.dev/web/drgn/components/footer.html')
+      $("#login").load('https://cdn.icnet.dev/web/drgn/components/login.html')
+      $("#register").load('https://cdn.icnet.dev/web/drgn/components/register.html')
    </script>
 </body>
 

@@ -7,6 +7,7 @@ const languageSelection = document.getElementById("lang");
 const typeSelection = document.getElementById("type");
 const upvotesOrderSelection = document.getElementById("upvotes-order");
 const upvotesElement = document.getElementsByClassName('upvotes')
+const DRAGONFLY_BACKEND_HOST = "https://api.inceptioncloud.net"
 
 const loadAmount = 15;
 
@@ -30,6 +31,7 @@ window.onload = () => {
         listFeedback();
     }, 0);
 }
+
 
 loadMoreBtn.addEventListener("click", function () {
     loadMoreBtn.innerText = "Loading..."

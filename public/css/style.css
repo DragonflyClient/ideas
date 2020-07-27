@@ -176,15 +176,41 @@ b {
   font-weight: 500 !important;
 }
 
+a {
+  color: #ef852e;
+}
+
+a:hover {
+  color: #ef852e;
+  opacity: 0.7;
+}
+
+#username-info {
+  margin-bottom: 10px;
+}
+
 /* Submit */
 .submit.intro {
-  margin-bottom: 40px;
+  margin: 0;
+}
+
+hr.submit {
+  margin: 20px 0;
 }
 
 #message1 {
   min-height: 300px;
   overflow: hidden;
   height: 300px;
+}
+
+#clearAttachments,
+#attachmentsHelp {
+  display: inline-block;
+}
+
+#clearAttachments {
+  float: right;
 }
 
 .loading {
@@ -383,7 +409,7 @@ small a {
   justify-self: end;
   grid-area: 1/2/3/3;
   margin-top: -8px;
-  width: 55px;
+  width: 45px;
 }
 
 .details.overview h3 {
@@ -460,6 +486,8 @@ small a {
   margin-bottom: 20px;
   padding: 5px 20px;
   font-size: 18px;
+  width: 150px;
+  text-align: center;
   background-color: #ef852e;
   border-color: #ef852e;
   outline: none;

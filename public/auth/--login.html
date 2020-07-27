@@ -4,16 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="./css/auth.css">
 </head>
 
 <body>
-    <form id="form">
-        <label for="name">Username</label>
-        <input type="text" name="name" id="name">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        <input type="submit" value="Login">
-    </form>
+    <div id="id01" class="modal">
+        <form class="modal-content animate" id="form">
+            <div onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">
+                &times;
+            </div>
+            <div class="container">
+                <label for="name">Username</label>
+                <input type="text" name="name" id="name">
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+
+                <button type="submit">Login</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
+    </div>
     <div id="result">-/-</div>
 </body>
 

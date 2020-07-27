@@ -1,4 +1,5 @@
 const IDEAS_API_HOST = "https://ideas-api.inceptioncloud.net"
+const DRAGONFLY_BACKEND_HOST = "https://api.inceptioncloud.net"
 
 const form = document.querySelector('#suggestion-form')
 const feedbackSelect = document.getElementById('feedback')
@@ -11,6 +12,8 @@ const attachmentsInput = document.getElementById("attachments")
 const attachmentsLabel = document.getElementById('attachmentsLabel')
 const clearAttachments = document.getElementById('clearAttachments')
 let selectedFiles = []
+
+let username = null
 
 const loader = document.getElementById('loader')
 
@@ -141,6 +144,43 @@ attachmentsInput.addEventListener('change', (event) => {
       attachmentsLabel.innerText = names
    } else {
       attachmentsLabel.innerText = "Upload attachments"
+   }
+})
+
+fetch(DRAGONFLY_BACKEND_HOST + "/cookie/auth", {
+   method: 'POST',
+   credentials: 'include'
+}).then(res => {
+   const container = document.getElementById("username-info")
+   const pre = document.createElement("span")
+   const post = document.createElement("span")
+   const strong = document.createElement(res.status === 200 ? "strong" : "span")
+
+   if (res.status === 200) {
+      res.json().then(res => {
+         username = res.username;
+
+         container.innerText = ""
+         pre.innerText = "You are currently logged in as "
+         strong.innerText = username
+         post.innerText = ". Your username will be visible on the post."
+
+         container.appendChild(pre)
+         container.appendChild(strong)
+         container.appendChild(post)
+      })
+   } else {
+      container.innerText = ""
+      pre.innerText = "Since you are currently not logged in, this post will be anonymous. "
+      strong.innerText = "Login"
+      strong.setAttribute("onclick", "document.getElementById('id01').style.display = 'block'")
+      strong.style.color = "var(--clr-primary)"
+      strong.style.cursor = "pointer"
+      post.innerText = " to receive updates related to your post!"
+
+      container.appendChild(pre)
+      container.appendChild(strong)
+      container.appendChild(post)
    }
 })
 
