@@ -199,6 +199,7 @@ b {
   min-height: 300px;
   height: 300px;
   overflow: auto;
+  font-family: Rubik, sans-serif !important;
 }
 
 #submit-btn {
@@ -502,7 +503,7 @@ small a {
     margin: 10px 0 !important;
   }
 
-  .sidenav > * {
+  .sidenav>* {
     padding: 0 !important;
   }
 
