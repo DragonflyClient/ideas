@@ -70,9 +70,8 @@ form.addEventListener('submit', async function (event) {
          'Content-Type': 'application/json',
       },
       body: JSON.stringify(feedback),
+      credentials: "include"
    }).then(response => {
-
-      console.log(attachmentsInput.value)
       if (response.ok) {
          response.json()
             .then(feedback => {

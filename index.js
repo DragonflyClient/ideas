@@ -194,36 +194,47 @@ app.get("/upvote", (req, res) => {
 })
 
 app.post("/submit", (req, res) => {
-    if (isValid(req.body)) {
-        const idea = {
-            type: req.body.type,
-            title: req.body.title,
-            message: req.body.message,
-            created: new Date(),
-            createdMs: new Date().getTime(),
-            lang: req.body.lang,
-            upvotes: [],
-            upvotesAmount: 0
-        };
+    const token = req.cookies["dragonfly-token"]
+    validateToken(token).then((account) => {
+        if (isValid(req.body)) {
+            const idea = {
+                type: req.body.type,
+                title: req.body.title,
+                message: req.body.message,
+                created: new Date(),
+                createdMs: new Date().getTime(),
+                lang: req.body.lang,
+                upvotes: [],
+                upvotesAmount: 0
+            };
 
-        if (req.body.attachments && req.body.attachments.length > 0) {
-            idea.attachments = req.body.attachments
+            if (account == null) {
+                idea.anonymous = true
+            } else {
+                idea.anonymous = false
+                idea.username = account.username
+                idea.identifier = account.identifier
+            }
+
+            if (req.body.attachments && req.body.attachments.length > 0) {
+                idea.attachments = req.body.attachments
+            }
+
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (req.body.email !== "" && req.body.email.match(re)) {
+                idea.email = req.body.email;
+            }
+
+            ideas.insert(idea);
+            res.send(req.body);
+        } else {
+            res.status(422);
+            res.json({
+                msg: "Please enter a title and a message.",
+                status: 422,
+            });
         }
-
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (req.body.email !== "" && req.body.email.match(re)) {
-            idea.email = req.body.email;
-        }
-
-        ideas.insert(idea);
-        res.send(req.body);
-    } else {
-        res.status(422);
-        res.json({
-            msg: "Please enter a title and a message.",
-            status: 422,
-        });
-    }
+    })
 });
 
 app.listen(3000, () => {

@@ -43,7 +43,6 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
             const itemInfo = document.createElement('div')
             itemInfo.classList.add('item-info')
 
-
             const details = document.createElement('div')
             details.classList.add('details', 'view')
 
@@ -65,26 +64,18 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
 
             const h2 = document.createElement("h2");
             h2.appendChild(createElmt(response.title));
+            h2.style.marginBottom = "8px"
 
-            const minecraftName = 'jwli'
+            const authorInfo = document.createElement('div')
+            authorInfo.classList.add('user-info')
 
-            const userInfo = document.createElement('div')
-            userInfo.classList.add('user-info')
+            if (response.username) {
+                const author = document.createElement('div')
+                author.classList.add('user-head')
+                author.textContent = 'by ' + response.username
 
-            const username = document.createElement('p')
-            username.textContent = minecraftName
-
-            const userHead = document.createElement('div')
-            userHead.classList.add('user-head')
-            userHead.textContent = 'by '
-
-            const minecraftHead = document.createElement('img')
-            minecraftHead.classList.add('user-head-img')
-            minecraftHead.src = `https://mc-heads.net/head/${minecraftName}`
-
-            userHead.appendChild(minecraftHead)
-            userInfo.appendChild(userHead)
-            userInfo.appendChild(username)
+                authorInfo.appendChild(author)
+            }
 
             const attachments = document.createElement("ul")
             attachments.id = 'attachments'
@@ -111,7 +102,6 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
             date.classList.add('created')
 
             const hrTop = document.createElement('hr')
-            const hrTop2 = document.createElement('hr')
             const hrBot = document.createElement('hr')
 
             details.appendChild(h2);
@@ -119,8 +109,8 @@ fetch(`${IDEAS_API_HOST}/id?id=${feedbackId}`, {
             itemInfo.appendChild(details)
             itemInfo.appendChild(upvoteButton)
             item.appendChild(itemInfo)
+            item.appendChild(authorInfo)
             item.appendChild(hrTop)
-            item.appendChild(userInfo)
             item.appendChild(message);
             item.appendChild(hrBot)
             item.appendChild(attachments)
