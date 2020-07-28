@@ -1,5 +1,5 @@
-const IDEAS_API_HOST = "https://ideas-api.inceptioncloud.net"
-const DRAGONFLY_BACKEND_HOST = "https://api.inceptioncloud.net"
+const IDEAS_API_HOST = "https://ideas-api.playdragonfly.net"
+const DRAGONFLY_BACKEND_HOST = "https://api.playdragonfly.net"
 
 const form = document.querySelector('#suggestion-form')
 const feedbackSelect = document.getElementById('feedback')

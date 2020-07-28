@@ -1,4 +1,4 @@
-const DRAGONFLY_BACKEND_HOST = "https://api.inceptioncloud.net"
+const DRAGONFLY_BACKEND_HOST = "https://api.playdragonfly.net"
 
 const express = require("express");
 const cors = require("cors");
@@ -39,7 +39,7 @@ app.use(bodyParser({ limit: '500kb' }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ['https://inceptioncloud.net', 'null'],
+    origin: ['https://inceptioncloud.net', 'https://ideas.playdragonfly.net', 'null'],
     credentials: true
 }))
 

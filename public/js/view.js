@@ -1,4 +1,4 @@
-const IDEAS_API_HOST = "https://ideas-api.inceptioncloud.net"
+const IDEAS_API_HOST = "https://ideas-api.playdragonfly.net"
 
 const feedbackId = new URL(window.location.href).searchParams.get("id");
 const cont = document.querySelector(".container");

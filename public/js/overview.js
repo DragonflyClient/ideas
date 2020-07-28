@@ -1,4 +1,5 @@
-const IDEAS_API_HOST = "https://ideas-api.inceptioncloud.net"
+const IDEAS_API_HOST = "https://ideas-api.playdragonfly.net"
+const DRAGONFLY_BACKEND_HOST = "https://api.playdragonfly.net"
 
 const feedbackCont = document.querySelector(".feedbacks");
 const loadMoreBtn = document.getElementById("load");
@@ -7,7 +8,6 @@ const languageSelection = document.getElementById("lang");
 const typeSelection = document.getElementById("type");
 const upvotesOrderSelection = document.getElementById("upvotes-order");
 const upvotesElement = document.getElementsByClassName('upvotes')
-const DRAGONFLY_BACKEND_HOST = "https://api.inceptioncloud.net"
 
 const loadAmount = 15;
 
