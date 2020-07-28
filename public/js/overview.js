@@ -32,6 +32,32 @@ window.onload = () => {
     }, 0);
 }
 
+fetch(DRAGONFLY_BACKEND_HOST + "/cookie/auth", {
+    method: 'POST',
+    credentials: 'include'
+}).then(res => {
+    if (res.status === 200) {
+        res.json().then(res => {
+            if (res.success) {
+                const container = document.getElementById("username-info")
+                const pre = document.createElement("span")
+                const post = document.createElement("span")
+                const strong = document.createElement("strong")
+
+                username = res.username;
+
+                container.innerText = ""
+                pre.innerText = "You are currently logged in as "
+                strong.innerText = username
+                post.innerText = ". Posts you create are marked with your name."
+
+                container.appendChild(pre)
+                container.appendChild(strong)
+                container.appendChild(post)
+            }
+        })
+    }
+})
 
 loadMoreBtn.addEventListener("click", function () {
     loadMoreBtn.innerText = "Loading..."
@@ -144,10 +170,6 @@ function upvoteHint() {
             }
         });
     });
-}
-
-function escape(msg) {
-    return msg.replace("<", "&lt;").replace(">", "&gt;");
 }
 
 function capitalizeFirstLetter(string) {

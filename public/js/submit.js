@@ -151,38 +151,51 @@ fetch(DRAGONFLY_BACKEND_HOST + "/cookie/auth", {
    method: 'POST',
    credentials: 'include'
 }).then(res => {
+   if (res.status === 200) {
+      res.json().then(res => {
+         if (res.success) {
+            const container = document.getElementById("username-info")
+            const pre = document.createElement("span")
+            const post = document.createElement("span")
+            const strong = document.createElement("strong")
+
+            username = res.username;
+
+            container.innerText = ""
+            pre.innerText = "You are currently logged in as "
+            strong.innerText = username
+            post.innerText = ". Posts you create are marked with your name."
+
+            container.appendChild(pre)
+            container.appendChild(strong)
+            container.appendChild(post)
+         } else {
+            loginFailed()
+         }
+      })
+   } else {
+      loginFailed()
+   }
+})
+
+function loginFailed() {
    const container = document.getElementById("username-info")
    const pre = document.createElement("span")
    const post = document.createElement("span")
-   const strong = document.createElement(res.status === 200 ? "strong" : "span")
+   const strong = document.createElement("span")
 
-   if (res.status === 200) {
-      res.json().then(res => {
-         username = res.username;
+   container.innerText = ""
+   pre.innerText = "Since you are currently not logged in, this post will be anonymous. "
+   strong.innerText = "Login"
+   strong.setAttribute("onclick", "document.getElementById('id01').style.display = 'block'")
+   strong.style.color = "var(--clr-primary)"
+   strong.style.cursor = "pointer"
+   post.innerText = " to receive updates related to your post!"
 
-         container.innerText = ""
-         pre.innerText = "You are currently logged in as "
-         strong.innerText = username
-         post.innerText = ". Your username will be visible on the post."
-
-         container.appendChild(pre)
-         container.appendChild(strong)
-         container.appendChild(post)
-      })
-   } else {
-      container.innerText = ""
-      pre.innerText = "Since you are currently not logged in, this post will be anonymous. "
-      strong.innerText = "Login"
-      strong.setAttribute("onclick", "document.getElementById('id01').style.display = 'block'")
-      strong.style.color = "var(--clr-primary)"
-      strong.style.cursor = "pointer"
-      post.innerText = " to receive updates related to your post!"
-
-      container.appendChild(pre)
-      container.appendChild(strong)
-      container.appendChild(post)
-   }
-})
+   container.appendChild(pre)
+   container.appendChild(strong)
+   container.appendChild(post)
+}
 
 function upload(input) {
    const name = input.name;
