@@ -184,6 +184,8 @@ function createContent(feedback) {
 
     const div = document.createElement("div");
     div.classList.add('fb')
+    div.onclick = () => window.location.href = `view?id=${feedback._id}`
+    div.style.cursor = "pointer"
 
     const details = document.createElement('div')
     details.classList.add('details')
@@ -199,7 +201,8 @@ function createContent(feedback) {
         'cjjQYLRUuAAAAABJRU5ErkJggg=='
 
     const heading = document.createElement("h3");
-    heading.classList.add('title-cont')
+    heading.classList.add('title-cont', 'title')
+    heading.innerText = feedback.title
 
     const upvotes = document.createElement("a")
     if (upvoted) {
@@ -210,18 +213,12 @@ function createContent(feedback) {
     upvotes.textContent = feedback.upvotesAmount || "0"
     upvotes.innerHTML += '<i class="fas fa-thumbs-up"></i>'
 
-    const a = document.createElement("a");
-    a.href = `view?id=${feedback._id}`;
-    a.textContent = feedback.title;
-    a.classList.add('title')
-
     const type = document.createElement("p");
     type.textContent = capitalizeFirstLetter(feedback.type);
 
     div.appendChild(upvotes);
     details.appendChild(heading);
     details.appendChild(flag)
-    heading.appendChild(a);
     details.appendChild(type);
     div.appendChild(details)
     feedbackCont.appendChild(div);

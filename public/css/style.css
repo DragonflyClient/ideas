@@ -375,6 +375,10 @@ small a {
   user-select: none;
 }
 
+.upvotes:hover {
+  opacity: 1;
+}
+
 .upvotes svg {
   margin-right: 8px;
   font-size: 18px;
