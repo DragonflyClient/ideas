@@ -523,9 +523,6 @@ small a {
 
 #submit-btn-note:hover {
   background-color: #ffffff;
-}
-
-#submit-btn-note:hover a {
   color: #ef852e;
 }
 
