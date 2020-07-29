@@ -80,9 +80,7 @@ form.addEventListener('submit', async function (event) {
                   'Good job!',
                   `Your feedback with the title "${feedback.title.replace('<', '&lt;').replace('>', '&gt;')}" was successfully sent!`,
                   'success'
-               )
-               setTimeout(function () {
-               }, 4500)
+               ).then(() => window.location.href = "./view?id=" + feedback.id)
                form.reset()
                quill.container.firstChild.innerHTML = ""
             })

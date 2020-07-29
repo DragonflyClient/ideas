@@ -44,7 +44,7 @@ app.use(cors({
 }))
 
 app.get("/", (req, res) => {
-    res.redirect("https://inceptioncloud.net/dragonfly/ideas")
+    res.redirect("https://ideas.playdragonfly.net")
 });
 
 app.get("/overview", async function (req, res) {
@@ -225,8 +225,13 @@ app.post("/submit", (req, res) => {
                 idea.email = req.body.email;
             }
 
-            ideas.insert(idea);
-            res.send(req.body);
+            const response = req.body
+            ideas.insert(idea)
+                .then(result => {
+                    response.id = result._id
+                    console.log(response)
+                    res.send(response);
+                });
         } else {
             res.status(422);
             res.json({
