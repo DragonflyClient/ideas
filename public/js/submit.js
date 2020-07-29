@@ -78,7 +78,7 @@ form.addEventListener('submit', async function (event) {
                clearAttachments.click()
                Swal.fire(
                   'Good job!',
-                  `Your feedback with the title "${feedback.title.replace('<', '&lt;').replace('>', '&gt;')} was successfully sent!`,
+                  `Your feedback with the title "${feedback.title.replace('<', '&lt;').replace('>', '&gt;')}" was successfully sent!`,
                   'success'
                )
                setTimeout(function () {

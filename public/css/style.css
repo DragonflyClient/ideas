@@ -483,6 +483,7 @@ small a {
   color: #ef852e;
   border-color: #ef852e;
   outline: none;
+  margin-top: 30px;
 }
 
 #load:hover {
