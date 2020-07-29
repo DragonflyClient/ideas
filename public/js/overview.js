@@ -80,7 +80,6 @@ loadMoreBtn.addEventListener("click", function () {
                 loadMoreBtn.innerText = "Load More"
             });
 
-            upvoteHint()
         });
     });
 });
@@ -121,11 +120,16 @@ function listFeedback() {
     )
         .then((response) => response.json())
         .then((feedbacks) => {
-            feedbackCont.innerText = "";
-            loadMoreBtn.style.display = 'block'
-            feedbacks.forEach((feedback) => createContent(feedback));
+            if (feedbacks.length > 0 && feedbacks[0].end !== true) {
+                feedbackCont.innerText = ""
+                feedbacks.forEach((feedback) => {
+                    createContent(feedback);
+                });
+                loadMoreBtn.style.display = 'block'
+            } else {
+                feedbackCont.innerText = "No items found."
+            }
 
-            upvoteHint()
         });
 }
 
@@ -152,25 +156,12 @@ function reloadAll() {
                 feedbacks.forEach((feedback) => {
                     createContent(feedback);
                 });
-                upvoteHint()
             } else {
-                feedbackCont.innerText = "No items apply to the given filters!"
+                feedbackCont.innerText = "No items found."
             }
         });
 }
 
-function upvoteHint() {
-    Array.from(upvotesElement).forEach(function (element) {
-        element.addEventListener('click', () => {
-            if (!element.classList.contains('upvoted')) {
-                element.classList.add('clicked')
-                setTimeout(() => {
-                    element.classList.remove('clicked')
-                }, 1300)
-            }
-        });
-    });
-}
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);

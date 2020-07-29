@@ -7,10 +7,28 @@
 body,
 html {
   width: 100%;
-  height: 100vh !important;
-  overflow-y: auto;
-  overflow-x: hidden;
   font-family: Rubik !important;
+}
+
+html {
+  height: 100% !important;
+}
+
+body {
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.page-wrapper.view {
+  min-height: 100%;
+  margin-bottom: -400px;
+}
+
+.page-wrapper.view:after {
+  content: "";
+  display: block;
 }
 
 :root {
@@ -36,8 +54,14 @@ select:focus {
   border-color: var(--clr-plight) !important;
 }
 
-#footer {
-  margin-top: 167px;
+#footer,
+.page-wrapper.view:after {
+  height: 394px;
+}
+
+#footer.view {
+  position: absolute !important;
+  bottom: 0;
 }
 
 /* VIEW */
@@ -373,7 +397,6 @@ small a {
 
 .feedbacks {
   margin: 0 !important;
-  margin-right: 50px !important;
 }
 
 .details.overview {
@@ -479,11 +502,11 @@ small a {
 
 #load {
   display: none;
-  width: 95%;
+  width: 100%;
   color: #ef852e;
   border-color: #ef852e;
   outline: none;
-  margin-top: 30px;
+  margin: 30px 0;
 }
 
 #load:hover {
@@ -498,6 +521,7 @@ small a {
 .sidenav {
   height: 60vh;
   width: 350px;
+  margin-left: 50px !important;
   position: sticky;
   z-index: 1;
   top: 100px;
