@@ -5,12 +5,12 @@ const form = document.querySelector('#suggestion-form')
 const feedbackSelect = document.getElementById('feedback')
 const languageSelect = document.getElementById('language')
 const container = document.querySelector('.container')
-const warningCont = document.getElementById('warning')
 const submitBtn = document.getElementById('submit-btn')
 
 const attachmentsInput = document.getElementById("attachments")
 const attachmentsLabel = document.getElementById('attachmentsLabel')
 const clearAttachments = document.getElementById('clearAttachments')
+const footer = document.getElementById('footer')
 let selectedFiles = []
 
 let username = null
@@ -30,6 +30,7 @@ form.addEventListener('submit', async function (event) {
    const attachments = []
 
    container.style.display = 'none'
+   footer.style.display = 'none'
    loader.style.display = 'block'
 
    for (let file of selectedFiles) {
@@ -39,7 +40,6 @@ form.addEventListener('submit', async function (event) {
          attachments.push(link)
       } else {
          attachmentsInput.value = ''
-         warningCont.innerHTML = ''
          setTimeout(function () {
             Swal.fire({
                title: 'Error!',
@@ -82,7 +82,6 @@ form.addEventListener('submit', async function (event) {
                   'success'
                )
                setTimeout(function () {
-                  warningCont.innerHTML = ''
                }, 4500)
                form.reset()
                quill.container.firstChild.innerHTML = ""
@@ -96,13 +95,11 @@ form.addEventListener('submit', async function (event) {
                if (err.status === 429) {
                   submitBtn.disabled = true
                   setTimeout(function () {
-                     warningCont.innerHTML = ""
                   }, 300000)
                }
                setTimeout(function () {
                   submitBtn.disabled = false
                }, 30000)
-               warningCont.innerHTML = ''
                setTimeout(function () {
                   Swal.fire({
                      title: 'Error!',
@@ -117,6 +114,7 @@ form.addEventListener('submit', async function (event) {
    event.preventDefault()
 
    container.style.display = 'block'
+   footer.style.display = 'block'
    loader.style.display = 'none'
 })
 

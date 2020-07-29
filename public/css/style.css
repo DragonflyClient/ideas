@@ -26,6 +26,16 @@ a {
   text-decoration: none !important;
 }
 
+input,
+select {
+  box-shadow: none !important;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--clr-plight) !important;
+}
+
 #footer {
   margin-top: 167px;
 }
@@ -176,11 +186,11 @@ b {
   font-weight: 500 !important;
 }
 
-a {
+.ideas-link {
   color: #ef852e;
 }
 
-a:hover {
+.ideas-link:hover {
   color: #ef852e;
   opacity: 0.7;
 }
@@ -196,6 +206,10 @@ a:hover {
 
 hr.submit {
   margin: 20px 0;
+}
+
+#username-info.submit {
+  margin-bottom: 20px;
 }
 
 #message1 {
@@ -232,6 +246,13 @@ hr.submit {
   margin-top: 20px;
   background-color: #ef852e;
   border-color: #ef852e;
+  box-shadow: none;
+  transition: .25s ease;
+}
+
+#submit-btn:hover {
+  background-color: #ffffff;
+  color: #ef852e;
 }
 
 small a {
@@ -416,6 +437,7 @@ small a {
 }
 
 .details.overview h3 {
+  word-break: break-word;
   font-size: 21px;
 }
 
@@ -494,10 +516,36 @@ small a {
   background-color: #ef852e;
   border-color: #ef852e;
   outline: none;
+  transition: none;
+  transition: .25s ease;
+}
+
+#submit-btn-note:hover {
+  background-color: #ffffff;
+}
+
+#submit-btn-note:hover a {
+  color: #ef852e;
 }
 
 #submit-btn-note a {
   color: #ffffff;
+  transition: .25s ease;
+}
+
+@media (max-width: 500px) {
+  .details.overview {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .details.overview h3 {
+    font-size: 18px;
+  }
+
+  .details.overview img {
+    width: 30px;
+  }
 }
 
 @media (max-width: 950px) {
