@@ -151,8 +151,16 @@ app.get("/upvote", (req, res) => {
     const id = req.query.id;
     validateToken(token).then((account) => {
         if (account && id) {
-            getEntriesById(id, (entry) => {
-                const upvotes = entry[0].upvotes || []
+            getEntriesById(id, (entries) => {
+                if (account.identifier === entries[0].identifier) {
+                    res.json({
+                        success: false,
+                        error: "Cannot upvote own post"
+                    })
+                    return
+                }
+
+                const upvotes = entries[0].upvotes || []
                 let added
                 if (upvotes.contains(account.identifier)) {
                     upvotes.remove(account.identifier)
@@ -229,7 +237,6 @@ app.post("/submit", (req, res) => {
             ideas.insert(idea)
                 .then(result => {
                     response.id = result._id
-                    console.log(response)
                     res.send(response);
                 });
         } else {

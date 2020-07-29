@@ -146,14 +146,18 @@ function upvote() {
                 upvoteButton.innerHTML = `${result.upvotesAmount}<i class="fas fa-thumbs-up"></i>`
                 result.added ? upvoteButton.classList.add('upvoted') : upvoteButton.classList.remove('upvoted')
             } else if (result.success !== undefined) {
-                setTimeout(function () {
-                    Swal.fire({
-                        title: `Error!`,
-                        text: `${result.error}`,
-                        icon: 'error',
-                        confirmButtonText: 'Got it'
-                    })
-                }, 50)
+                if (result.status === "Unauthenticated") {
+                    document.getElementById('id01').style.display='block'
+                } else {
+                    setTimeout(function () {
+                        Swal.fire({
+                            title: `Error!`,
+                            text: `${result.error}`,
+                            icon: 'error',
+                            confirmButtonText: 'Got it'
+                        })
+                    }, 50)
+                }
             } else {
                 setTimeout(function () {
                     Swal.fire({
