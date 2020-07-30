@@ -214,3 +214,22 @@ function createContent(feedback) {
     div.appendChild(details)
     feedbackCont.appendChild(div);
 }
+
+function afterLogin(success, username) {
+    if (success) {
+        const container = document.getElementById("username-info")
+        const pre = document.createElement("span")
+        const post = document.createElement("span")
+        const strong = document.createElement('strong')
+
+        container.innerText = ""
+        pre.innerText = "You are currently logged in as "
+        strong.innerText = username
+        post.innerText = ". Posts you create are marked with your name."
+
+        container.appendChild(pre)
+        container.appendChild(strong)
+        container.appendChild(post)
+        listFeedback()
+    }
+}
