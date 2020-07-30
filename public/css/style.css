@@ -224,6 +224,10 @@ b {
 }
 
 /* Submit */
+.btp.view {
+  margin-top: 0;
+}
+
 .submit.intro {
   margin: 0;
 }
