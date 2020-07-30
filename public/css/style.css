@@ -602,6 +602,7 @@ small a {
     padding: 0 !important;
     padding: 0 17px !important;
     border: none;
+    margin-left: 0 !important;
   }
 
   .sidenav .my-3 {
