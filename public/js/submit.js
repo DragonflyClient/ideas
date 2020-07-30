@@ -43,7 +43,7 @@ form.addEventListener('submit', async function (event) {
             setTimeout(function () {
                 Swal.fire({
                     title: 'Error!',
-                    text: "Could not upload attachment. Probably bad file type.",
+                    text: "Could not upload attachment. Please check your file type and try again later!",
                     icon: 'error',
                     confirmButtonText: 'Got it'
                 })
