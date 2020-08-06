@@ -221,6 +221,8 @@ function afterLogin(success, username) {
         const pre = document.createElement("span")
         const post = document.createElement("span")
         const strong = document.createElement('strong')
+        document.getElementById('id01').style.display = 'none'
+        document.getElementById('id02').style.display = 'none'
 
         container.innerText = ""
         pre.innerText = "You are currently logged in as "

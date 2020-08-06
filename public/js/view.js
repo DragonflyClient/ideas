@@ -181,6 +181,8 @@ function upvote() {
 }
 
 function afterLogin(success) {
+    document.getElementById('id01').style.display = 'none'
+    document.getElementById('id02').style.display = 'none'
     console.log('llllview' + success)
     document.getElementById('item').innerHTML = ''
     loadView()
