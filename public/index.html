@@ -10,6 +10,7 @@
    <link rel="stylesheet" href="https://cdn.icnet.dev/web/drgn/css/header-styles-normal.css">
    <link rel="icon" href="https://cdn.icnet.dev/web/drgn/assets/img/svg/Dragon.svg" />
    <link rel="stylesheet" href="https://cdn.icnet.dev/web/drgn/components/css/footer.css">
+   <link rel="stylesheet" href="https://cdn.icnet.dev/web/drgn/css/header-style.css">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
    <!-- IONICONS -->
    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
@@ -25,35 +26,8 @@
 
 <body>
    <div class="page-wrapper">
-      <div class="header" id="navbar">
-         <div class="upper-wrapper">
-            <div class="logo" onclick="scrollToTop()" style="cursor: pointer">
-               <img id="logo-img" src="https://cdn.icnet.dev/web/drgn/assets/img/svg/Dragon.png" alt="Logo" />
-            </div>
-            <div class="ham-wrapper">
-               <div class="line line1"></div>
-               <div class="line line2"></div>
-               <div class="line line3"></div>
-            </div>
-         </div>
-         <div class="nav" id="nav" style="overflow: hidden">
-            <ul>
-               <li class="item" onclick="closeMenu()"><a href="https://playdragonfly.net">Home</a></li>
-               <li class="item" onclick="closeMenu()">
-                  <a href="https://playdragonfly.net/releasenotes">Updates</a>
-               </li>
-               <li class="item" onclick="closeMenu()">
-                  <a href="https://playdragonfly.net/download">Download</a>
-               </li>
-               <div class="socials">
-                  <a href="https://icnet.dev/insta">
-                     <i class="fab fa-instagram"></i></a>
-                  <a href="https://icnet.dev/twitter">
-                     <i class="fab fa-twitter"></i></a>
-                  <a href="https://icnet.dev/discord">
-                     <i class="fab fa-discord"></i></a>
-            </ul>
-         </div>
+      <div class="header" id="header">
+
       </div>
       <div class="container1">
          <div class="overview intro">
@@ -128,7 +102,8 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous" async>
    </script>
-   <script>
+   <script async>
+      $('#header').load('https://cdn.icnet.dev/web/drgn/components/header.html')
       $("#footer").load('https://cdn.icnet.dev/web/drgn/components/footer.html')
       $("#login").load('https://cdn.icnet.dev/web/drgn/components/login.html')
       $("#register").load('https://cdn.icnet.dev/web/drgn/components/register.html')
