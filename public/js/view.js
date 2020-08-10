@@ -39,6 +39,7 @@ function loadView() {
 
             } else {
                 // display id page
+                console.log(response.canManage)
 
                 document.title = escape(`${response.title} | ${capitalizeFirstLetter(response.type)}`);
 
@@ -68,9 +69,42 @@ function loadView() {
                     upvote()
                 })
 
-                const h2 = document.createElement("h2");
-                h2.appendChild(createElmt(response.title));
-                h2.style.marginBottom = "8px"
+                const title = document.createElement("span");
+                title.appendChild(createElmt(response.title));
+                title.classList.add('item-title')
+                title.style.marginBottom = "8px"
+
+                const state = document.createElement('span');
+                let stateClass = (escape(response.state || 'pending')).toLowerCase()
+
+                if (!response.canManage) {
+                    state.innerHTML = `
+                    <li class="state state-dropdown state-view dropdown">
+                        <a id="drgn-state-manager" href="#">
+                            <div style="cursor: default;" class="drgn-information ${stateClass}" onclick="toggleDropdown(this)">
+                                <span style="pointer-events: none;" id="drgn-accountname" class="dropbtn">${escape(prettifyState(response.state || 'PENDING'))}</span>
+                            </div>
+                        </a>
+                    </li>` // Possible states_ PENDING, APPROVED, DECLINED, DEVELOPMENT, RELEASED_EAP, RELEASED
+                } else {
+                    state.innerHTML = `
+                    <li class="state state-dropdown dropdown">
+                        <a id="drgn-state-manager" href="#">
+                            <div class="drgn-information ${stateClass}" onclick="toggleDropdown(this)">
+                                <span style="pointer-events: none;" id="drgn-accountname" class="dropbtn">${escape(prettifyState(response.state || 'PENDING'))}</span>
+                                <span style="pointer-events: none; display: inline-block;" id="drgn-accountname-icon"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg><!-- <i class="fas fa-angle-down"></i> --></span>
+                            </div>
+                            <div id="myDropdown" class="dropdown-content" style="/* border-radius: 20px; */">
+                                <div class="dropdown-item dropdown-item-state pending-dropdown" href="#" onclick="changeState('PENDING')" data-toggle="modal" data-target="#logoutModal" style="border-radius: 5px 5px 0 0;">Pending</div>
+                                <div class="dropdown-item dropdown-item-state approved-dropdown" href="#" onclick="changeState('APPROVED')" data-toggle="modal" data-target="#logoutModal">Approved</div>
+                                <div class="dropdown-item dropdown-item-state declined-dropdown" href="#" onclick="changeState('DECLINED')" data-toggle="modal" data-target="#logoutModal">Declined</div>
+                                <div class="dropdown-item dropdown-item-state development-dropdown" href="#" onclick="changeState('DEVELOPMENT')" data-toggle="modal" data-target="#logoutModal">In development</div>
+                                <div class="dropdown-item dropdown-item-state released_eap-dropdown" href="#" onclick="changeState('RELEASED_EAP')" data-toggle="modal" data-target="#logoutModal">Released (EAP)</div>
+                                <div class="dropdown-item dropdown-item-state released-dropdown" href="#" onclick="changeState('RELEASED')" data-toggle="modal" data-target="#logoutModal" style="border-radius: 0 0 5px 5px;">Released</div>
+                            </div>
+                        </a>
+                    </li>`
+                }
 
                 const authorInfo = document.createElement('div')
                 authorInfo.classList.add('user-info')
@@ -110,7 +144,8 @@ function loadView() {
                 const hrTop = document.createElement('hr')
                 const hrBot = document.createElement('hr')
 
-                details.appendChild(h2);
+                details.appendChild(title);
+                details.appendChild(state)
                 details.appendChild(date);
                 itemInfo.appendChild(details)
                 itemInfo.appendChild(upvoteButton)
@@ -125,6 +160,31 @@ function loadView() {
                 cont.appendChild(item)
             }
         });
+}
+function prettifyState(state) {
+    if (state == 'DEVELOPMENT') return 'IN DEVELOPMENT'
+    if (state == 'RELEASED_EAP') return 'RELEASED (EAP)'
+
+    return state
+}
+function changeState(state) {
+    fetch(`${IDEAS_API_HOST}/state`, {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({
+            id: feedbackId,
+            state: state
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(response => response.json()).then(json => {
+        if (json.status == 200) {
+            location.reload()
+        } else {
+            console.error(json)
+        }
+    })
 }
 
 function escape(msg) {
@@ -180,10 +240,9 @@ function upvote() {
         })
 }
 
-function afterLogin(success) {
+function afterLogin(success, username, account) {
     document.getElementById('id01').style.display = 'none'
     document.getElementById('id02').style.display = 'none'
-    console.log('llllview' + success)
     document.getElementById('item').innerHTML = ''
     loadView()
 }

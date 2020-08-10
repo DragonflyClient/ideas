@@ -65,9 +65,15 @@ select:focus {
   position: absolute !important;
   bottom: 0;
 }
-@media (max-height: 740px), (max-width: 900px) {
+
+@media (max-height: 740px),
+(max-width: 900px) {
   #footer.view {
     position: relative !important;
+  }
+
+  #footer {
+    height: auto;
   }
 }
 
@@ -104,6 +110,17 @@ select:focus {
 .details.view {
   padding: 0;
   width: 100%;
+  position: relative;
+}
+
+.state {
+  position: absolute;
+  margin-left: 10px;
+  color: #ffffff;
+  top: 8px;
+  font-size: 0.8rem;
+  padding: 3px 10px;
+  border-radius: 20px;
 }
 
 .details.view h2 {
@@ -114,6 +131,167 @@ select:focus {
   margin: 0px 20px;
   color: #333333;
   cursor: pointer;
+}
+
+.state-dropdown {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+.state-dropdown .state {
+  padding: 0;
+}
+
+.state-dropdown.dropdown {
+  float: none !important;
+}
+
+.state-dropdown .drgn-state-manager {
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes newReveal {
+  0% {
+    transform: scale(0.8) !important;
+  }
+
+  100% {
+    transform: scale(1) !important;
+  }
+}
+
+.state-dropdown .dropdown-content {
+  right: unset;
+  top: 35px;
+  width: 165px;
+  transform-origin: unset;
+}
+
+
+.state-dropdown .dropdown-item {
+  font-size: 0.9rem;
+  color: #ffffff;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.state-view .drgn-information {
+  width: auto !important;
+}
+
+.state-dropdown .dropdown-item:focus,
+.state-dropdown .dropdown-item:hover {
+  color: #ffffff;
+}
+
+.state-dropdown .drgn-information {
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  width: 165px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+}
+
+
+.item-title {
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.state .pending,
+.state.pending {
+  background-color: #bdc3c7;
+}
+
+.state-dropdown .dropdown-item:hover {
+  color: #ffffff;
+  transition: .35s ease;
+}
+
+.state .approved,
+.state.approved {
+  background-color: #2ecc71;
+}
+
+.state .declined,
+.state.declined {
+  background-color: #e74c3c;
+}
+
+.state .development,
+.state.development {
+  background-color: #3498db;
+}
+
+.state .released_eap,
+.state.released_eap {
+  background-color: #f39c12;
+}
+
+.state .released,
+.state.released {
+  background-color: #9b59b6;
+}
+
+.state .development-dropdown {
+  color: #3498db;
+  background-color: #ffffff;
+}
+
+.state .development-dropdown:hover {
+  background-color: #3498db;
+}
+
+.state .pending-dropdown {
+  color: #bdc3c7;
+  background-color: #ffffff
+}
+
+.state .pending-dropdown:hover {
+  background-color: #bdc3c7
+}
+
+.state .approved-dropdown {
+  color: #2ecc71;
+  background-color: white
+}
+
+.state .approved-dropdown:hover {
+  background-color: #2ecc71
+}
+
+.state .declined-dropdown {
+  color: #e74c3c;
+  background-color: white;
+}
+
+.state .declined-dropdown:hover {
+  background-color: #e74c3c;
+}
+
+.state .released_eap-dropdown {
+  color: #f39c12;
+  background-color: white;
+}
+
+.state .released_eap-dropdown:hover {
+  background-color: #f39c12;
+}
+
+.state .released-dropdown {
+  color: #9b59b6;
+  background-color: white;
+}
+
+.state .released-dropdown:hover {
+  background-color: #9b59b6;
+}
+
+.dropdown-item-state {
+  text-transform: uppercase;
 }
 
 @keyframes pulsate-fwd {
@@ -152,7 +330,6 @@ select:focus {
   display: flex;
   align-items: center;
   width: 100%;
-  overflow: hidden;
 }
 
 .created {
@@ -231,6 +408,8 @@ b {
 #username-info {
   margin-bottom: 10px;
 }
+
+
 
 /* Submit */
 .btp.view {
@@ -568,7 +747,7 @@ small a {
   transition: 0.25s ease;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 520px) {
   .details.overview {
     display: flex;
     flex-direction: column;
@@ -580,6 +759,11 @@ small a {
 
   .details.overview img {
     width: 30px;
+  }
+
+  .state-dropdown {
+    margin: 0;
+    padding: 0;
   }
 }
 
@@ -618,7 +802,7 @@ small a {
     margin: 10px 0 !important;
   }
 
-  .sidenav > * {
+  .sidenav>* {
     padding: 0 !important;
   }
 

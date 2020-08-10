@@ -117,6 +117,7 @@ app.get("/id", async function (req, res) {
             const upvotes = found[0].upvotes || []
             info.email = null
             info.upvotes = null
+            info.canManage = account && account.permissionLevel >= 8
 
             if (account) {
                 info.upvoted = upvotes.contains(account.identifier)
@@ -133,6 +134,70 @@ app.get("/id", async function (req, res) {
             })
         })
 });
+
+app.post('/state', async function (req, res) {
+    const token = req.cookies['dragonfly-token']
+    validateToken(token).then((account) => {
+        if (!account) {
+            res.status(401)
+            res.json({
+                status: 401,
+                msg: "Unauthenticated"
+            })
+            return
+        }
+        if (account.permissionLevel < 8) {
+            res.status(401)
+            res.json({
+                status: 401,
+                msg: 'Insufficient permissions'
+            })
+            return
+        }
+        const state = req.body.state
+        const id = req.body.id
+        const stateList = ["PENDING", "APPROVED", "DECLINED", "DEVELOPMENT", "RELEASED_EAP", "RELEASED"];
+        console.log(req.body)
+        if (stateList.includes(state)) {
+            getEntriesById(id,
+                found => {
+                    if (found.length === 0) {
+                        res.status(404)
+                        res.json({
+                            status: 404,
+                            msg: 'Feedback not found',
+                            id
+                        })
+                        return
+                    }
+
+                    ideas.update({ _id: id }, {
+                        $set: {
+                            state: state
+                        }
+                    })
+                    res.json({
+                        status: 200,
+                        msg: 'success'
+                    })
+                },
+                () => {
+                    res.status(404)
+                    res.json({
+                        status: 404,
+                        msg: 'Feedback not found',
+                        id
+                    })
+                })
+        } else {
+            res.status(400)
+            res.json({
+                status: 400,
+                msg: 'Invalid state'
+            })
+        }
+    })
+})
 
 app.use(rateLimit({
     windowMs: 60 * 1000, // every minute
