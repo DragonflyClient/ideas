@@ -58,7 +58,7 @@ select:focus {
 
 #footer,
 .page-wrapper.view:after {
-  height: 394px;
+  min-height: 394px;
 }
 
 #footer.view {
