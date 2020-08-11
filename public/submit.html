@@ -15,8 +15,6 @@
   <link rel="stylesheet" href="./css/style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
   <!-- IONICONS -->
-  <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
   <meta name="description" content="In order to make the Dragonfly Client and all of its components even better, we need your help. So if you have a
         bug in the client, on the website or on our Discord server, please do not hesitate to report it here.">
 </head>
@@ -69,82 +67,85 @@
     </div>
     <div class="submit intro">
       <h1 class="mb-3">Give us feedback!</h1>
-    <hr class="submit">
-    <p id="username-info" class="submit">Authenticating...</p>
-    <form id="suggestion-form">
-      <div class="form-group">
-        <label for="email">Email address</label>
-        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
-          placeholder="ricks@pickles.com" />
-        <small id="emailHelp" class="form-text text-muted">An email address isn't required. We'll never share your email
-          with anyone else.</small>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="feedback">Feedback type</label>
-            <select class="form-control" name="feedback" id="feedback">
-              <option value="suggestion">Suggestion</option>
-              <option value="bugreport">Bug</option>
-              <option value="comment">Comment</option>
-            </select>
-            <small class="form-text text-muted">Please make sure not to repeat what has
-              <a href="./">already been posted</a>.</small>
+      <hr class="submit">
+      <p id="username-info" class="submit">Authenticating...</p>
+      <form id="suggestion-form">
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+            placeholder="ricks@pickles.com" />
+          <small id="emailHelp" class="form-text text-muted">An email address isn't required. We'll never share your
+            email
+            with anyone else.</small>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="feedback">Feedback type</label>
+              <select class="form-control" name="feedback" id="feedback">
+                <option value="suggestion">Suggestion</option>
+                <option value="bugreport">Bug</option>
+                <option value="comment">Comment</option>
+              </select>
+              <small class="form-text text-muted">Please make sure not to repeat what has
+                <a href="./">already been posted</a>.</small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="language">Language</label>
+              <select class="form-control" name="language" id="language">
+                <option value="en" selected>English</option>
+                <option value="de">Deutsch</option>
+              </select>
+            </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="language">Language</label>
-            <select class="form-control" name="language" id="language">
-              <option value="en" selected>English</option>
-              <option value="de">Deutsch</option>
-            </select>
-          </div>
+        <div class="form-group">
+          <label for="subject">Title <span class="text-danger">*</span></label>
+          <input type="text" minlength="10" maxlength="100" class="form-control" id="subject"
+            aria-describedby="emailHelp" placeholder="About.." name="subject" />
         </div>
-      </div>
-      <div class="form-group">
-        <label for="subject">Title <span class="text-danger">*</span></label>
-        <input type="text" minlength="10" maxlength="100" class="form-control" id="subject" aria-describedby="emailHelp"
-          placeholder="About.." name="subject" />
-      </div>
-      <label for="message1">Message <span class="text-danger">*</span></label>
-      <div class="form-group" id="message1">
-        <textarea class="form-control" name="message" id="message" style="resize: none;" rows="15"></textarea>
-      </div>
-      <div class="custom-file mt-4 mb-2">
-        <input id="attachments" class="custom-file-input" type="file" accept="image/png, image/jpeg, image/gif" multiple
-          title="" />
-        <label id="attachmentsLabel" for="attachments" class="custom-file-label" title="">Upload attachments</label>
-      </div>
-      <button id="clearAttachments" type="button" class="btn btn-dark">Clear attachments</button>
-      <small id="attachmentsHelp" class="form-text text-muted">Please note that only images can be attached.</small><br>
-      
-      <div class="form-check">
-        <input type="checkbox" name="readRules" class="form-check-input" onclick="change(this)" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Please read and accept the <a class="ideas-link" href="./rules">rules</a> before submitting your post</label>
-      </div>
-      <button type="submit" id="submit-btn" class="btn btn-primary">
-        Submit
-      </button>
-      <hr />
-      <p class="form-text text-muted">
-        <span class="text-danger">*</span> Required
-      </p>
-    </form>
-  </div>
-  <div class="lds-roller" id="loader">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
+        <label for="message1">Message <span class="text-danger">*</span></label>
+        <div class="form-group" id="message1">
+          <textarea class="form-control" name="message" id="message" style="resize: none;" rows="15"></textarea>
+        </div>
+        <div class="custom-file mt-4 mb-2">
+          <input id="attachments" class="custom-file-input" type="file" accept="image/png, image/jpeg, image/gif"
+            multiple title="" />
+          <label id="attachmentsLabel" for="attachments" class="custom-file-label" title="">Upload attachments</label>
+        </div>
+        <button id="clearAttachments" type="button" class="btn btn-dark">Clear attachments</button>
+        <small id="attachmentsHelp" class="form-text text-muted">Please note that only images can be
+          attached.</small><br>
+
+        <div class="form-check">
+          <input type="checkbox" name="readRules" class="form-check-input" onclick="change(this)" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Please read and accept the <a class="ideas-link"
+              href="./rules">rules</a> before submitting your post</label>
+        </div>
+        <button type="submit" id="submit-btn" class="btn btn-primary">
+          Submit
+        </button>
+        <hr />
+        <p class="form-text text-muted">
+          <span class="text-danger">*</span> Required
+        </p>
+      </form>
+    </div>
+    <div class="lds-roller" id="loader">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 
-  
+
   <div id="footer" style="margin-top: 50px;"></div>
   <div id="login"></div>
   <div id="register"></div>

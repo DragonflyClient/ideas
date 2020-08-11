@@ -21,8 +21,10 @@ feedbackCont.innerText = "Loading...";
 loadMoreBtn.style.display = 'none'
 
 window.onunload = function () { };
-window.onload = () => {
+window.addEventListener('load', function () {
+    console.log('loaded')
     setTimeout(function () {
+        console.log('settimeout')
         // updating values after the browser cache has been applied to the selections
         order = orderSelection.options[orderSelection.selectedIndex].value === "latest" ? -1 : 1;
         language = languageSelection.options[languageSelection.selectedIndex].value;
@@ -30,7 +32,7 @@ window.onload = () => {
         upvotesOrder = upvotesOrderSelection.options[upvotesOrderSelection.selectedIndex].value;
         listFeedback();
     }, 0);
-}
+})
 
 fetch(DRAGONFLY_BACKEND_HOST + "/cookie/auth", {
     method: 'POST',

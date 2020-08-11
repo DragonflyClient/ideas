@@ -103,7 +103,7 @@ form.addEventListener('submit', async function (event) {
       response.json().then((err) => {
         if (err.status === 429) {
           submitBtn.disabled = true;
-          setTimeout(function () {}, 300000);
+          setTimeout(function () { }, 300000);
         }
         setTimeout(function () {
           submitBtn.disabled = false;
