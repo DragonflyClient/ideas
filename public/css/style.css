@@ -66,8 +66,8 @@ select:focus {
   bottom: 0;
 }
 
-@media (max-height: 740px),
-(max-width: 900px) {
+@media (max-height: 670px),
+(max-width: 980px) {
   #footer.view {
     position: relative !important;
   }
@@ -678,7 +678,7 @@ small a {
 
 .container1 {
   width: 66%;
-  margin: 0 auto;
+  margin: 100px auto 0 auto;
 }
 
 .content {
