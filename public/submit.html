@@ -21,57 +21,94 @@
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.icnet.dev/web/drgn/components/css/auth.css">
   <link rel="icon" href="https://cdn.icnet.dev/web/drgn/assets/img/svg/Dragon.svg" />
-  <link rel="stylesheet" href="https://cdn.icnet.dev/web/drgn/css/header-styles-normal.css">
+  <link rel="stylesheet" href="https://cdn.icnet.dev/web/drgn/css/header-style.css">
   <link rel="stylesheet" href="https://cdn.icnet.dev/web/drgn/components/css/footer.css">
   <link rel="stylesheet" href="./css/style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
-  <!-- IONICONS -->
+  <!-- Fontawesome -->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"
+      integrity="sha512-YSdqvJoZr83hj76AIVdOcvLWYMWzy6sJyIMic2aQz5kh2bPTd9dzY3NtdeEAzPp/PhgZqr4aJObB3ym/vsItMg=="
+      crossorigin="anonymous"
+    ></script>
   <meta name="description" content="In order to make the Dragonfly Client and all of its components even better, we need your help. So if you have a
         bug in the client, on the website or on our Discord server, please do not hesitate to report it here.">
 </head>
+<script src="https://cdn.icnet.dev/web/drgn/js/common.js"></script>
 
 <body>
-  <div class="header" id="navbar">
-    <div class="upper-wrapper">
-      <div class="logo" onclick="scrollToTop()" style="cursor: pointer">
-        <img id="logo-img" src="https://cdn.icnet.dev/web/drgn/assets/img/svg/Dragon.png" alt="Logo" />
-      </div>
-      <div class="ham-wrapper">
-        <div class="line line1"></div>
-        <div class="line line2"></div>
-        <div class="line line3"></div>
-      </div>
-    </div>
-    <div class="nav" id="nav" style="overflow: hidden">
-      <ul>
-        <li class="item" onclick="closeMenu()"><a href="/dragonfly">Home</a></li>
-        <li class="item" onclick="closeMenu()">
-          <a href="/dragonfly/releasenotes">Updates</a>
-        </li>
-        <li class="item" onclick="closeMenu()">
-          <a href="/dragonfly/download">Download</a>
-        </li>
-        <div class="socials">
-          <a href="https://instagram.com/inceptioncloud">
-            <i class="fab fa-instagram"></i></a>
-          <a href="https://twitter.com/inceptioncloud">
-            <i class="fab fa-twitter"></i></a>
-          <a href="https://icnet.dev/discord">
-            <i class="fab fa-discord"></i></a>
+  <div class="header" id="header">
+        <div class="upper-wrapper">
+          <div class="logo" id="logo">
+            <a href="/" onclick="scrollToTop()"
+              ><img class="logo-img" src="https://playdragonfly.net/assets/Dragon.png" alt=""
+            /></a>
+          </div>
+          <div class="ham-wrapper">
+            <div class="line line1"></div>
+            <div class="line line2"></div>
+            <div class="line line3"></div>
+          </div>
         </div>
-      </ul>
-    </div>
-  </div>
+        <div style="font-size: 19px;" class="nav dfo" id="nav">
+          <ul>
+            <li class="item" onclick="closeMenu()">
+              <a href="https://playdragonfly.net">Home</a>
+            </li>
+            <li class="item" onclick="closeMenu()">
+              <a href="https://ideas.playdragonfly.net/">Ideas</a>
+            </li>
+            <li class="item" onclick="closeMenu()">
+              <a href="https://playdragonfly.net/patchnotes">Updates</a>
+            </li>
+            <li class="item" onclick="closeMenu()">
+              <a href="https://playdragonfly.net/download">Download</a>
+            </li>
+            <li class="item dropdown dropdown-account">
+              <a id="drgn-account-login" href="#">
+                <div class="drgn-information" onclick="toggleDropdown(this)">
+                  <span style="pointer-events: none;" id="drgn-accountname" class="dropbtn"></span
+                  ><span style="pointer-events: none;" id="drgn-accountname-icon"
+                    ><i class="fas fa-angle-down"></i
+                  ></span>
+                </div>
+                <div id="myDropdown" class="dropdown-content">
+                  <div
+                    class="dropdown-item"
+                    href="#"
+                    onclick="logOut()"
+                    data-toggle="modal"
+                    data-target="#logoutModal"
+                  >
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                  </div>
+                </div>
+              </a>
+            </li>
+            <div class="socials">
+              <a href="https://instagram.com/inceptioncloud">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://twitter.com/inceptioncloud">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="https://discord.gg/VS2eN2z">
+                <i class="fab fa-discord"></i>
+              </a>
+            </div>
+          </ul>
+        </div>
+      </div>
   <div class="container py-5">
     <div class="btp view">
       <a href="./">
-        <svg class="svg-inline--fa fa-arrow-left fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas"
-          data-icon="arrow-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
-          <path fill="currentColor" d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4
-               24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8
-               9.3 10 24.8.4 34.3z">
-          </path>
-        </svg><!-- <i class="fas fa-arrow-left"></i> --></a>
+        <i class="fas fa-arrow-left"></i></a>
       <a href="./">
         <p>Ideas Overview</p>
       </a>
@@ -131,7 +168,7 @@
           attached.</small><br>
 
         <div class="form-check">
-          <input type="checkbox" name="readRules" class="form-check-input" onclick="change(this)" id="exampleCheck1">
+          <input type="checkbox" name="readRules" class="form-check-input" required onclick="change(this)" id="exampleCheck1">
           <label class="form-check-label" for="exampleCheck1">Please read and accept the <a class="ideas-link"
               href="./rules">rules</a> before submitting your post</label>
         </div>

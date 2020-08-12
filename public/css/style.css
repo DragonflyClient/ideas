@@ -56,6 +56,10 @@ select:focus {
   border-color: var(--clr-plight) !important;
 }
 
+.container {
+  margin-top: 5vh !important;
+}
+
 #footer,
 .page-wrapper.view:after {
   min-height: 394px;
@@ -145,6 +149,12 @@ select:focus {
 
 .state-dropdown.dropdown {
   float: none !important;
+}
+
+.state-dropdown .drgn-state-manager,
+.state-dropdown .drgn-information,
+.state-dropdown .dropdown-item-state {
+  cursor: pointer;
 }
 
 .state-dropdown .drgn-state-manager {
@@ -315,6 +325,10 @@ select:focus {
 
 .upvotes.upvoted {
   color: #ef852e !important;
+}
+
+.upvotes i {
+  margin-right: 20px;
 }
 
 #upvotes.upvoted {
@@ -617,7 +631,7 @@ small a {
 
 .upvotes svg {
   margin-right: 8px;
-  font-size: 18px;
+  font-size: 22px;
   opacity: 0.8;
 }
 
