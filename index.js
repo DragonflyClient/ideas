@@ -113,6 +113,7 @@ app.get("/id", async function (req, res) {
                 return
             }
 
+            console.log(account)
             const info = found[0]
             const upvotes = found[0].upvotes || []
             info.email = null
@@ -320,7 +321,7 @@ app.listen(3000, () => {
 
 function validateToken(token) {
     const options = {
-        url: `${DRAGONFLY_BACKEND_HOST}/auth`,
+        url: `${DRAGONFLY_BACKEND_HOST}/v1/authentication/token`,
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token
