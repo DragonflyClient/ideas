@@ -152,7 +152,7 @@ attachmentsInput.addEventListener('change', (event) => {
   }
 });
 
-fetch(DRAGONFLY_BACKEND_HOST + '/cookie/auth', {
+fetch(DRAGONFLY_BACKEND_HOST + '/v1/authentication/cookie/token', {
   method: 'POST',
   credentials: 'include',
 }).then((res) => {
