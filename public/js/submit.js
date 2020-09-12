@@ -11,6 +11,16 @@ const attachmentsInput = document.getElementById('attachments');
 const attachmentsLabel = document.getElementById('attachmentsLabel');
 const clearAttachments = document.getElementById('clearAttachments');
 const footer = document.getElementById('footer');
+
+const url_string = window.location.href;
+const url = new URL(url_string);
+const type = url.searchParams.get("type");
+
+if (type) {
+  document.querySelector(`.${type}`).setAttribute('selected', "true")
+  console.log(type);
+}
+
 let selectedFiles = [];
 
 let username = null;
