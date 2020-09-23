@@ -39,7 +39,7 @@ app.use(bodyParser({ limit: '500kb' }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ['https://inceptioncloud.net', 'https://ideas.playdragonfly.net', 'null'],
+    origin: ['https://inceptioncloud.net', 'https://ideas.playdragonfly.net'],
     credentials: true
 }))
 
