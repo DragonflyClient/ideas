@@ -10,6 +10,7 @@ const credentials = require("./creds");
 const { ObjectId } = require("mongodb");
 const db = monk(`mongodb://${credentials.db.username}:${credentials.db.password}@45.85.219.34:27017/dragonfly`);
 const ideas = db.get("ideas");
+const accounts = db.get("accounts");
 const request = require('request');
 const cookieParser = require('cookie-parser')
 
@@ -82,7 +83,7 @@ app.get("/overview", async function (req, res) {
 
             result.forEach(element => {
                 if (account) {
-                    element.upvoted = element.upvotes.contains(account.identifier)
+                    element.upvoted = element.upvotes.contains(account.uuid)
                 }
                 element.upvotes = null
                 element.email = null
@@ -102,7 +103,7 @@ app.get("/id", async function (req, res) {
     const token = req.cookies['dragonfly-token']
     const account = await validateToken(token)
     getEntriesById(id,
-        found => {
+        async found => {
             if (found.length === 0) {
                 res.status(404)
                 res.json({
@@ -113,7 +114,6 @@ app.get("/id", async function (req, res) {
                 return
             }
 
-            console.log(account)
             const info = found[0]
             const upvotes = found[0].upvotes || []
             info.email = null
@@ -121,7 +121,11 @@ app.get("/id", async function (req, res) {
             info.canManage = account && account.permissionLevel >= 8
 
             if (account) {
-                info.upvoted = upvotes.contains(account.identifier)
+                info.upvoted = upvotes.contains(account.uuid)
+            }
+
+            if (info.creator) {
+                info.username = (await getAccountByUUID(info.creator)).username
             }
 
             res.json(info)
@@ -218,7 +222,7 @@ app.get("/upvote", (req, res) => {
     validateToken(token).then((account) => {
         if (account && id) {
             getEntriesById(id, (entries) => {
-                if (account.identifier === entries[0].identifier) {
+                if (account.uuid === entries[0].creator) {
                     res.json({
                         success: false,
                         error: "Cannot upvote own post"
@@ -228,11 +232,11 @@ app.get("/upvote", (req, res) => {
 
                 const upvotes = entries[0].upvotes || []
                 let added
-                if (upvotes.contains(account.identifier)) {
-                    upvotes.remove(account.identifier)
+                if (upvotes.contains(account.uuid)) {
+                    upvotes.remove(account.uuid)
                     added = false
                 } else {
-                    upvotes.push(account.identifier)
+                    upvotes.push(account.uuid)
                     added = true
                 }
 
@@ -286,8 +290,7 @@ app.post("/submit", (req, res) => {
                 idea.anonymous = true
             } else {
                 idea.anonymous = false
-                idea.username = account.username
-                idea.identifier = account.identifier
+                idea.creator = account.uuid
             }
 
             if (req.body.attachments && req.body.attachments.length > 0) {
@@ -341,6 +344,10 @@ function validateToken(token) {
             resolve(null)
         })
     })
+}
+
+function getAccountByUUID(uuid) {
+    return accounts.findOne({ uuid: uuid })
 }
 
 function getEntriesById(id, callback, error) {
